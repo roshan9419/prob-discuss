@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "probdiscuss-qna": {
+      "hosting": {
+        "prob-discuss": [
+          "probdiscuss-qna"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "probdiscuss-qna"
+  }
+}
