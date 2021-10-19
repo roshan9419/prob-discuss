@@ -11,6 +11,7 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import { AngularFireModule } from '@angular/fire/compat';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -28,16 +29,18 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideRemoteConfig(() => getRemoteConfig()),
-    provideStorage(() => getStorage())
+    // provideFirebaseApp(() => initializeApp(environment.firebase)),
+    // provideAuth(() => getAuth()),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule
+    // provideFirestore(() => getFirestore()),
+    // provideRemoteConfig(() => getRemoteConfig()),
+    // provideStorage(() => getStorage())
   ],
   providers: [
     AuthService,
-    DBService,
-    StorageService
+    // DBService,
+    // StorageService
   ],
   bootstrap: [AppComponent]
 })

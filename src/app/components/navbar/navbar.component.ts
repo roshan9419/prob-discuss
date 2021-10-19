@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+  getUser() {
+    return this.authService.auth.user;
+  }
+
+  async login() {
+    try {
+      const user = await this.authService.googleLoginIn();
+      // alert(`Welcome, ${user?.displayName}`);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async logout() {
+    try {
+      await this.authService.signOut();
+      // alert("Logged Out");
+    } catch (e) {
+      console.log(e);
+    }
   }
 
 }
