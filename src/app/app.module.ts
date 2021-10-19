@@ -13,6 +13,9 @@ import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config
 import { provideStorage,getStorage } from '@angular/fire/storage';
 
 // Services
+import { AuthService } from './services/auth.service';
+import { DBService } from './services/db.service';
+import { StorageService } from './services/storage.service';
 
 // Components
 
@@ -29,7 +32,11 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    DBService,
+    StorageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
