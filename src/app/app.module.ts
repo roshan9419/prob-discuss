@@ -18,10 +18,12 @@ import { DBService } from './services/db.service';
 import { StorageService } from './services/storage.service';
 
 // Components
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
