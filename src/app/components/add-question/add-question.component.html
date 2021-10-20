@@ -1,0 +1,22 @@
+<div class="m-3">
+    <h4>Add Question</h4>
+    <hr>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group my-3">
+            <label for="title">Question Title</label>
+            <input type="text" class="form-control" name="title" id="title" [(ngModel)]="question.title">
+        </div>
+        <div class="form-group my-3">
+            <label for="content">Describe your problem</label>
+            <input type="text" class="form-control" name="content" id="content" [(ngModel)]="question.content">
+        </div>
+        <div class="form-group my-3">
+            <label for="tags">Tags (Separated by ,)</label>
+            <input type="text" class="form-control" name="tags" id="tags" [(ngModel)]="question.tags">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!fieldsValid()">Publish Question</button>
+    </form>
+    <div>
+        {{ publishedStatus }}
+    </div>
+</div>
