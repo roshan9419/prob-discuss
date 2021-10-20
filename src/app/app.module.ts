@@ -24,12 +24,16 @@ import { StorageService } from './services/storage.service';
 // Components
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddQuestionComponent } from './components/add-question/add-question.component';
+import { HomeQuestionsComponent } from './components/home-questions/home-questions.component';
+import { QuestionItemComponent } from './components/question-item/question-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    AddQuestionComponent
+    AddQuestionComponent,
+    HomeQuestionsComponent,
+    QuestionItemComponent
   ],
   imports: [
     BrowserModule,

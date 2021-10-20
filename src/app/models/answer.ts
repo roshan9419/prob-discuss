@@ -1,13 +1,11 @@
-export class Question {
+export class Answer {
+    answerId!: string
     questionId!: string
     userId!: string
     username!: string
-    title!: string
     content!: string
-    tags?: string
-    imgPath?: string[]
     upvotes?: string[]
-    askedDate!: Date
+    answeredDate!: Date
 
     toJson() {
         return Object.assign({}, this);

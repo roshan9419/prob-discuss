@@ -28,6 +28,7 @@ export class AddQuestionComponent implements OnInit {
       await this.dbService.addNewQuestion(this.question);
       this.clearFields();
       this.publishedStatus = 'Question published successfuly';
+      setTimeout(() => this.publishedStatus = '', 2000);
     } catch (e) {
       console.log(e);
       this.publishedStatus = 'Something went wrong';
