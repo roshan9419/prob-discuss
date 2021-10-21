@@ -1,3 +1,7 @@
+<div class="m-3">
+    <h1>Recently Asked Questions</h1>
+    <hr>
+</div>
 <div class="m-3" *ngIf="isLoading; else showQuestions">
     <p>Awaiting Data...</p>
 </div>
@@ -9,3 +13,8 @@
         <app-question-item [questionItem]="question"></app-question-item>
     </div>
 </ng-template>
+<!-- 
+<div *ngIf="!isLoading;">
+    <button class="btn btn-light mx-3">Previous Page</button>
+    <button class="btn btn-dark">Next Page</button>
+</div> -->
