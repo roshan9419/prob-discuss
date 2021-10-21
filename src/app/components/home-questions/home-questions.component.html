@@ -1,3 +1,11 @@
-<div *ngFor="let question of questionsList">
-    <app-question-item [questionItem]="question"></app-question-item>
+<div class="m-3" *ngIf="isLoading; else showQuestions">
+    <p>Awaiting Data...</p>
 </div>
+<ng-template #showQuestions>
+    <div *ngIf="questionsList.length === 0">
+        <p>No questions found</p>
+    </div>
+    <div *ngFor="let question of questionsList">
+        <app-question-item [questionItem]="question"></app-question-item>
+    </div>
+</ng-template>

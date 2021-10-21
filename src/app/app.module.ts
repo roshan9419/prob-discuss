@@ -26,6 +26,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddQuestionComponent } from './components/add-question/add-question.component';
 import { HomeQuestionsComponent } from './components/home-questions/home-questions.component';
 import { QuestionItemComponent } from './components/question-item/question-item.component';
+import { UserDpComponent } from './components/user-dp/user-dp.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { QuestionItemComponent } from './components/question-item/question-item.
     NavbarComponent,
     AddQuestionComponent,
     HomeQuestionsComponent,
-    QuestionItemComponent
+    QuestionItemComponent,
+    UserDpComponent
   ],
   imports: [
     BrowserModule,

@@ -14,25 +14,26 @@
                     <a class="nav-link" aria-current="page" href="#">About</a>
                 </li>
             </ul>
-            <form class="d-flex mx-3">
+            <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
             <div *ngIf="getUser() | async as user; else showLogin">
-                <ul class="navbar-nav mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ user.email != null ? user.email.substring(0, user.email.indexOf('@')) : user.displayName }}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Your Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Your Questions</a></li>
-                            <li><a class="dropdown-item" href="#">Your Answers</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" (click)="logout()">Log Out</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="navbar-nav nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <app-user-dp [photoUrl]="user.photoURL"></app-user-dp>
+                        {{ user.email != null ? user.email.substring(0, user.email.indexOf('@')) : user.displayName }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Your Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Your Questions</a></li>
+                        <li><a class="dropdown-item" href="#">Your Answers</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" (click)="logout()">Log Out</a></li>
+                    </ul>
+                </div>
             </div>
             <ng-template #showLogin>
                 <button class="btn btn-primary btn-sm mx-3" (click)="login()">Login with Google</button>

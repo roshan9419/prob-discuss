@@ -9,6 +9,7 @@ import { Question } from 'src/app/models/question';
 })
 export class HomeQuestionsComponent implements OnInit {
 
+  isLoading: boolean = true
   questionsList: Question[] = []
 
   constructor(private dbService: DBService) {}
@@ -24,6 +25,7 @@ export class HomeQuestionsComponent implements OnInit {
       if (response.length === 0) {
         console.log("No data available");
       }
+      this.isLoading = false;
     } catch (e) {
       console.log(e);
     }
