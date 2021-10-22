@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Question } from '../models/question';
+import { Answer } from '../models/answer';
+import { AnswerType } from '../models/enums/answerType';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,21 @@ export class DBService {
 
   constructor(private db: AngularFirestore) { }
 
-  async fetchRecentQuestions(lastFetchedId?: any, limit = 10) {
+  async addQuestion(question: Question) {
+    const qDocRef = this.db.collection('questions').ref.doc();
+    question.questionId = qDocRef.id;
+    await qDocRef.set(question.toJson());
+  }
+
+  async getQuestionById(questionId: string) {
+    const quesDoc = await this.db.collection<Question>('questions').ref.doc(questionId).get();
+    if (!quesDoc.exists) {
+      throw new Error('Question not found');
+    }
+    return quesDoc.data();
+  }
+
+  async fetchRecentQuestions(lastFetchedId?: any, limit = 20) {
     let query = this.db.collection<Question>('questions').ref.orderBy('askedDate', 'desc').limit(limit);
     if (lastFetchedId) {
       query = query.startAfter(lastFetchedId);
@@ -23,9 +39,33 @@ export class DBService {
     return questions;
   }
 
-  async addNewQuestion(question: Question) {
-    const qDocRef = this.db.collection('questions').ref.doc();
-    question.questionId = qDocRef.id;
-    await qDocRef.set(question.toJson());
+  async addAnswer(answer: Answer) {
+    const aDocRef = this.db.collection('answers').ref.doc();
+    answer.answerId = aDocRef.id;
+    await aDocRef.set(answer.toJson());
+  }
+
+  async fetchAnswersByQuestionId(questionId: string, answerType: AnswerType, lastFetchedId?: any, limit = 10) {
+    let query = this.db
+      .collection<Answer>('answers').ref
+      .where('questionId', '==', questionId)
+      .limit(limit);
+
+    if (answerType == AnswerType.MOST_VOTED) {
+      query = query.orderBy('totalVotes', 'desc');
+    }
+    // filter by latest
+    query = query.orderBy('askedDate', 'desc');
+
+    if (lastFetchedId) {
+      query = query.startAfter(lastFetchedId);
+    }
+
+    const answers: Answer[] = [];
+    const querySnapshot = await query.get();
+    querySnapshot.docs.forEach(answerDoc => {
+      answers.push(answerDoc.data());
+    });
+    return answers;
   }
 }

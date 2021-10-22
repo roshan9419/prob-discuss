@@ -27,6 +27,8 @@ import { AddQuestionComponent } from './components/add-question/add-question.com
 import { HomeQuestionsComponent } from './components/home-questions/home-questions.component';
 import { QuestionItemComponent } from './components/question-item/question-item.component';
 import { UserDpComponent } from './components/user-dp/user-dp.component';
+import { QuestionDetailComponent } from './components/question-detail/question-detail.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { UserDpComponent } from './components/user-dp/user-dp.component';
     AddQuestionComponent,
     HomeQuestionsComponent,
     QuestionItemComponent,
-    UserDpComponent
+    UserDpComponent,
+    QuestionDetailComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

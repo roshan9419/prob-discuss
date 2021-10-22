@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseError } from '@firebase/util';
 import { Question } from 'src/app/models/question';
+import { AuthService } from 'src/app/services/auth.service';
 import { DBService } from 'src/app/services/db.service';
 
 @Component({
@@ -12,7 +14,7 @@ export class AddQuestionComponent implements OnInit {
   question: Question;
   publishedStatus: string = '';
 
-  constructor(private dbService: DBService) {
+  constructor(private dbService: DBService, private authService: AuthService) {
     this.question = new Question();
   }
 
@@ -20,18 +22,23 @@ export class AddQuestionComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.question.userId = 'thisismyrandomuserid';
-    this.question.username = 'Roshan Kumar';
-    this.question.askedDate = new Date();
-
     try {
-      await this.dbService.addNewQuestion(this.question);
+      const user = await this.authService.auth.currentUser;
+      if (!user) {
+        this.publishedStatus = "You're not logged in";
+        return;
+      }
+      this.question.userId = user!.uid;
+      this.question.username = user!.displayName!;
+      this.question.askedDate = new Date();
+
+      await this.dbService.addQuestion(this.question);
       this.clearFields();
       this.publishedStatus = 'Question published successfuly';
       setTimeout(() => this.publishedStatus = '', 2000);
     } catch (e) {
       console.log(e);
-      this.publishedStatus = 'Something went wrong';
+      this.publishedStatus = 'Something went wrong, please try again.';
     }
   }
 
