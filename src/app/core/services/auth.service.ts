@@ -7,7 +7,9 @@ import firebase from 'firebase/compat/app';
 })
 export class AuthService {
 
-  constructor(public auth: AngularFireAuth) { }
+  constructor(public auth: AngularFireAuth) {
+    console.log("AuthService Initialized");
+  }
 
   async googleLoginIn() {
     const response = await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());

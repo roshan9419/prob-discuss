@@ -9,7 +9,9 @@ import { AnswerType } from '../models/enums/answerType';
 })
 export class DBService {
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore) { 
+    console.log("DBService Initialized");
+  }
 
   async addQuestion(question: Question) {
     const qDocRef = this.db.collection('questions').ref.doc();

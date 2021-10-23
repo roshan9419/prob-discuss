@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
     <div class="container-fluid">
         <a class="navbar-brand" routerLink='/'>
-            <img src="https://icons555.com/images/icons-blue/image_icon_stackoverflow_3_pic_512x512.png" width="30" height="30"
-                class="d-inline-block align-top" alt="">
+            <img src="https://icons555.com/images/icons-blue/image_icon_stackoverflow_3_pic_512x512.png" width="30"
+                height="30" class="d-inline-block align-top" alt="">
             ProbDiscuss
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -25,7 +25,9 @@
                 <div class="navbar-nav nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <app-user-dp [photoUrl]="user.photoURL"></app-user-dp>
+                        <img [ngStyle]="{'border-radius': '50%'}" src={{user.photoURL}} width="30" height="30"
+                            onerror="this.src='https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png;'"
+                            alt="...">
                         {{ user.email != null ? user.email.substring(0, user.email.indexOf('@')) : user.displayName }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

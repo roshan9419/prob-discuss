@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseError } from '@firebase/util';
-import { Question } from 'src/app/models/question';
-import { AuthService } from 'src/app/services/auth.service';
-import { DBService } from 'src/app/services/db.service';
+import { Question } from 'src/app/core/models/question';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { DBService } from 'src/app/core/services/db.service';
 
 @Component({
   selector: 'app-add-question',

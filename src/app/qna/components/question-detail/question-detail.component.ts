@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Question } from 'src/app/models/question';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DBService } from 'src/app/services/db.service';
+import { Question } from 'src/app/core/models/question';
+import { DBService } from 'src/app/core/services/db.service';
 
 @Component({
   selector: 'app-question-detail',
