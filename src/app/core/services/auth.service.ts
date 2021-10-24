@@ -11,6 +11,11 @@ export class AuthService {
     console.log("AuthService Initialized");
   }
 
+  isAuthValidated = async () => {
+    const user = await this.auth.currentUser;
+    return user != null && user.uid != null;
+  }
+
   async googleLoginIn() {
     const response = await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     return response.user;

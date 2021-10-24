@@ -47,7 +47,7 @@ export class DBService {
     await aDocRef.set(answer.toJson());
   }
 
-  async fetchAnswersByQuestionId(questionId: string, answerType: AnswerType, lastFetchedId?: any, limit = 10) {
+  async fetchAnswersByQuestionId(questionId: string, answerType: AnswerType, lastFetchedId?: any, limit: number = 10) {
     let query = this.db
       .collection<Answer>('answers').ref
       .where('questionId', '==', questionId)
@@ -57,7 +57,7 @@ export class DBService {
       query = query.orderBy('totalVotes', 'desc');
     }
     // filter by latest
-    query = query.orderBy('askedDate', 'desc');
+    query = query.orderBy('answeredDate', 'desc');
 
     if (lastFetchedId) {
       query = query.startAfter(lastFetchedId);
@@ -68,6 +68,7 @@ export class DBService {
     querySnapshot.docs.forEach(answerDoc => {
       answers.push(answerDoc.data());
     });
+    console.log(answers);
     return answers;
   }
 }
