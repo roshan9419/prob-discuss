@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -33,6 +34,12 @@ export class NavbarComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  async viewProfile() {
+    const user = await this.authService.auth.currentUser;
+    if (!user) return;
+    this.router.navigateByUrl(`/profile/${user.uid}`);
   }
 
 }

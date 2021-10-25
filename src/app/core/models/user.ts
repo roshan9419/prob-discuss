@@ -1,7 +1,7 @@
 export class User {
     userId!: string
     username!: string
-    email?: string
+    email?: string | null
     photoUrl?: string
     about?: string
     occupation?: string

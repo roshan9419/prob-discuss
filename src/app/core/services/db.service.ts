@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Question } from '../models/question';
 import { Answer } from '../models/answer';
 import { AnswerType } from '../models/enums/answerType';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,14 @@ export class DBService {
     console.log("DBService Initialized");
   }
 
+  async isUserExists(userId: string) {
+    return (await this.db.collection('users').ref.doc(userId).get()).exists;
+  }
+
+  async updateUser(user: User) {
+    await this.db.collection('users').doc(user.userId).ref.set(user.toJson());
+  }
+
   async addQuestion(question: Question) {
     const qDocRef = this.db.collection('questions').ref.doc();
     question.questionId = qDocRef.id;
@@ -20,7 +29,7 @@ export class DBService {
   }
 
   async getQuestionById(questionId: string) {
-    const quesDoc = await this.db.collection<Question>('questions').ref.doc(questionId).get();
+    const quesDoc = await this.db.collection<Question>('questions').doc(questionId).ref.get();
     if (!quesDoc.exists) {
       throw new Error('Question not found');
     }

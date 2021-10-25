@@ -4,6 +4,10 @@ import { AuthService } from './services/auth.service';
 import { DBService } from './services/db.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -11,11 +15,15 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [
-    AuthService,
-    DBService
+    DBService,
+    AuthService
   ],
   exports: [
     NavbarComponent

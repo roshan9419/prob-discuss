@@ -4,21 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-// Firebase
-// import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-// import { provideAuth,getAuth } from '@angular/fire/auth';
-// import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-// import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
-// import { provideStorage,getStorage } from '@angular/fire/storage';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-
 // Modules
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { QnaModule } from './qna/qna.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -30,17 +20,9 @@ import { QnaModule } from './qna/qna.module';
     CoreModule,
     SharedModule,
     QnaModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireModule,
-    AngularFireAuthModule,
-    AngularFirestoreModule
+    ProfileModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-// provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // provideAuth(() => getAuth()),
-    // provideFirestore(() => getFirestore()),
-    // provideRemoteConfig(() => getRemoteConfig()),
-    // provideStorage(() => getStorage())
