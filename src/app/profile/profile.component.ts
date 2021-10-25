@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Question } from '../core/models/question';
 import { User } from '../core/models/user';
 import { DBService } from '../core/services/db.service';
 
@@ -11,6 +12,7 @@ import { DBService } from '../core/services/db.service';
 export class ProfileComponent implements OnInit {
 
   user: User = new User();
+  questionsList: Question[] = [];
 
   constructor(private activatedroute: ActivatedRoute, private route: Router, private dbService: DBService) { }
 
@@ -32,9 +34,14 @@ export class ProfileComponent implements OnInit {
     try {
       const res = await this.dbService.getUser(this.user.userId);
       if (res) this.user = res;
+      this.loadUserQuestions();
     } catch (error) {
       this.route.navigateByUrl('404');
     }
+  }
+
+  async loadUserQuestions() {
+    this.questionsList = await this.dbService.fetchUserQuestions(this.user.userId);
   }
 
 }

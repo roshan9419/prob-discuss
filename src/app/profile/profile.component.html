@@ -37,9 +37,18 @@
             <div>
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab">Activity</a></li>
-                    <li><a data-toggle="tab">Social</a></li>
-                    <li><a data-toggle="tab">Media</a></li>
+                    <li>
+                        <a data-toggle="tab"></a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab"></a>
+                    </li>
                 </ul>
+            </div>
+
+            <div *ngFor="let question of questionsList">
+                <p><b>{{question.title}}</b></p>
+                <i>{{question.content }}</i>
             </div>
         </div>
     </div>

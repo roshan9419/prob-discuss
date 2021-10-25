@@ -44,6 +44,25 @@ export class DBService {
     return quesDoc.data();
   }
 
+  async fetchUserQuestions(userId: string, lastFetchedId?: any, limit: number = 10) {
+    let query = this.db
+      .collection<Question>('questions').ref
+      .where('userId', '==', userId)
+      .orderBy('askedDate', 'desc')
+      .limit(limit);
+
+    if (lastFetchedId) {
+      query = query.startAfter(lastFetchedId);
+    }
+
+    const questions: Question[] = [];
+    const querySnapshot = await query.get();
+    querySnapshot.docs.forEach(questionDoc => {
+      questions.push(questionDoc.data());
+    });
+    return questions;
+  }
+
   async fetchRecentQuestions(lastFetchedId?: any, limit = 20) {
     let query = this.db.collection<Question>('questions').ref.orderBy('askedDate', 'desc').limit(limit);
     if (lastFetchedId) {
