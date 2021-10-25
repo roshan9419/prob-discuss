@@ -1,1 +1,46 @@
-<p>profile works! {{userId}}</p>
+<section id="content" class="container">
+    <div class="page-heading">
+        <div>
+            <div class="media-left">
+                <img src="{{user.photoUrl}}" alt="...">
+            </div>
+            <div class="media-body">
+                <h2 class="media-heading">{{user.username}}</h2>
+                <p class="lead">Lorem ipsum dolor sit amet ctetur adicing elit, sed do eiusmod tempor incididunt</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-icon"><i class="fa fa-star"></i></span>
+                    <span class="panel-title"> User Stats</span>
+                </div>
+                <div class="panel-body">
+                    <p>User stats panel body</p>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-icon"><i class="fa fa-trophy"></i></span>
+                    <span class="panel-title"> Skills</span>
+                </div>
+                <div class="panel-body">
+                    <p>Skills panel body</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab">Activity</a></li>
+                    <li><a data-toggle="tab">Social</a></li>
+                    <li><a data-toggle="tab">Media</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

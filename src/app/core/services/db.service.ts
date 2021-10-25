@@ -18,6 +18,14 @@ export class DBService {
     return (await this.db.collection('users').ref.doc(userId).get()).exists;
   }
 
+  async getUser(userId: string) {
+    const userDocSnap = await this.db.collection<User>('users').ref.doc(userId).get();
+    if (!userDocSnap.exists) {
+      throw new Error("No such user found");
+    }
+    return userDocSnap.data();
+  }
+
   async updateUser(user: User) {
     await this.db.collection('users').doc(user.userId).ref.set(user.toJson());
   }
