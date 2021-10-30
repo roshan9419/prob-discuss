@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Question } from 'src/app/core/models/question';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'app-add-question',
@@ -12,8 +13,9 @@ export class AddQuestionComponent implements OnInit {
 
   question: Question;
   publishedStatus: string = '';
+  files: File[] = [];
 
-  constructor(private dbService: DBService, private authService: AuthService) {
+  constructor(private dbService: DBService, private authService: AuthService, private storageService: StorageService) {
     this.question = new Question();
   }
 
@@ -31,9 +33,19 @@ export class AddQuestionComponent implements OnInit {
       this.question.username = user!.displayName!;
       this.question.askedDate = new Date();
 
-      await this.dbService.addQuestion(this.question);
+      if (this.files.length !== 0) {
+        this.publishedStatus = 'Uploading files...';
+        try {
+          const filePaths = await this.storageService.uploadFileForQuestion("customqid1234", this.files);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      // await this.dbService.addQuestion(this.question);
       this.clearFields();
       this.publishedStatus = 'Question published successfuly';
+
       setTimeout(() => this.publishedStatus = '', 2000);
     } catch (e) {
       console.log(e);
@@ -43,6 +55,17 @@ export class AddQuestionComponent implements OnInit {
 
   fieldsValid() {
     return this.question.title && this.question.content;
+  }
+
+  onFilesChange(event: Event) {
+    const target = (event.target as HTMLInputElement);
+    const fileList = target.files as FileList;
+    this.files = [];
+    for (let i = 0; i < Math.min(5, fileList.length); i++) {
+      const file = fileList.item(i);
+      if (file) this.files[i] = file;
+    }
+    console.log(this.files);
   }
 
   clearFields() {

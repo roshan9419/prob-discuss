@@ -8,12 +8,17 @@
         </div>
         <div class="form-group my-3">
             <label for="content">Describe your problem</label>
-            <input type="text" class="form-control" name="content" id="content" [(ngModel)]="question.content">
+            <textarea type="text" class="form-control" name="content" id="content"
+                [(ngModel)]="question.content"></textarea>
         </div>
         <div class="form-group my-3">
             <label for="tags">Tags (Separated by ,)</label>
             <input type="text" class="form-control" name="tags" id="tags" [(ngModel)]="question.tags">
         </div>
+        <div class="form-group mb-3">
+            <label for="files" class="form-label">Multiple files input example</label>
+            <input class="form-control" type="file" accept="image/*" id="files" (change)="onFilesChange($event)" multiple>
+          </div>
         <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!fieldsValid()">Publish Question</button>
         <button type="reset" class="btn btn-danger btn-sm mx-3">Clear</button>
     </form>
