@@ -5,7 +5,7 @@ export class Question {
     title!: string
     content!: string
     tags?: string
-    imgPath?: string[]
+    imgPaths?: string[]
     upvotes?: string[]
     askedDate!: Date
 

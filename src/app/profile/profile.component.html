@@ -46,7 +46,7 @@
             </div>
 
             <div *ngFor="let question of questionsList">
-                <p><b>{{question.title}}</b></p>
+                <a (click)="onViewQuestion(question.questionId)"><b>{{question.title}}</b></a><br>
                 <i>{{question.content }}</i>
             </div>
         </div>

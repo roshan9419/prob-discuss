@@ -33,16 +33,18 @@ export class AddQuestionComponent implements OnInit {
       this.question.username = user!.displayName!;
       this.question.askedDate = new Date();
 
+      const questionId: string = await this.dbService.addQuestion(this.question);
       if (this.files.length !== 0) {
         this.publishedStatus = 'Uploading files...';
         try {
-          const filePaths = await this.storageService.uploadFileForQuestion("customqid1234", this.files);
+          this.question.imgPaths = await this.storageService.uploadFileForQuestion(questionId, this.files);
+          this.publishedStatus = 'Uploaded';
+          await this.dbService.updateQuestion(this.question);
         } catch (e) {
           console.log(e);
         }
       }
 
-      // await this.dbService.addQuestion(this.question);
       this.clearFields();
       this.publishedStatus = 'Question published successfuly';
 

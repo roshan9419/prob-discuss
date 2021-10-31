@@ -42,6 +42,11 @@ export class ProfileComponent implements OnInit {
 
   async loadUserQuestions() {
     this.questionsList = await this.dbService.fetchUserQuestions(this.user.userId);
+  
+  }
+
+  onViewQuestion(questionId: string) {
+    this.route.navigateByUrl(`/question/${questionId}`);
   }
 
 }

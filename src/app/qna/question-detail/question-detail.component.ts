@@ -5,6 +5,7 @@ import { AnswerType } from 'src/app/core/models/enums/answerType';
 import { Question } from 'src/app/core/models/question';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'app-question-detail',
@@ -19,7 +20,7 @@ export class QuestionDetailComponent implements OnInit {
   publishedStatus = ''
   answersList: Answer[] = []
 
-  constructor(private activatedroute: ActivatedRoute, private route: Router, private dbService: DBService, private authService: AuthService) {
+  constructor(private activatedroute: ActivatedRoute, private route: Router, private dbService: DBService, private authService: AuthService, private storageService: StorageService) {
     this.question = new Question();
     this.answer = new Answer();
   }
@@ -72,6 +73,10 @@ export class QuestionDetailComponent implements OnInit {
 
   clearFields() {
     this.answer.content = '';
+  }
+  
+  getImageLink(imgPath: string) {
+    return this.storageService.getImageUrl(imgPath);
   }
 
 }

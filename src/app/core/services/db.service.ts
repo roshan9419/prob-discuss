@@ -34,6 +34,15 @@ export class DBService {
     const qDocRef = this.db.collection('questions').ref.doc();
     question.questionId = qDocRef.id;
     await qDocRef.set(question.toJson());
+    return question.questionId;
+  }
+
+  async updateQuestion(question: Question) {
+    const qDocRef = await this.db.collection('questions').ref.doc(question.questionId).get();
+    if (!qDocRef.exists) {
+      throw new Error("Question not found");
+    }
+    await qDocRef.ref.set(question.toJson());
   }
 
   async getQuestionById(questionId: string) {

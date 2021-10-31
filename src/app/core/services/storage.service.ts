@@ -8,6 +8,13 @@ export class StorageService {
 
   constructor(private storage: AngularFireStorage) { }
 
+  private BUCKET_NAME: string = 'probdiscuss-qna.appspot.com';
+  
+  getImageUrl(imgPath: string) {
+    const encoded = encodeURIComponent(imgPath);
+    return `https://firebasestorage.googleapis.com/v0/b/${this.BUCKET_NAME}/o/${encoded}?alt=media`;
+  }
+
   async uploadFileForQuestion(questionId: string, files: File[]) {
     const filePaths: string[] = [];
     await Promise.all(files.map(async file => {
