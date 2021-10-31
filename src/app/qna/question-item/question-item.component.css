@@ -1,0 +1,23 @@
+a {
+    text-decoration: none;
+    color: royalblue;
+}
+
+.container {
+    padding: 10px;
+    border-bottom: 1px solid rgb(207, 207, 207);
+}
+
+.qtitle {
+    font-size: 18px;
+}
+
+p {
+    font-size: 16px;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}

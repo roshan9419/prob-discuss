@@ -1,5 +1,10 @@
-<div class="m-3">
-    <h6 class="my-3">Q: {{ questionItem.title }}</h6>
-    <i>{{ questionItem.content }}</i><br>
-    <button class="btn btn-primary btn-sm" (click)="onViewQuestion()">View Question</button>
+<div class="container">
+    <a class="qtitle" [routerLink]="'/question/' + questionItem.questionId">{{ questionItem.title }}</a><br>
+    <p>{{ questionItem.content }}</p>
+
+    <div class="tag-container" *ngIf="questionItem.tags">
+        <span *ngFor="let tag of (questionItem.tags.split(','))">
+            <app-tag [name]="tag.trim()"></app-tag>
+        </span>
+    </div>
 </div>

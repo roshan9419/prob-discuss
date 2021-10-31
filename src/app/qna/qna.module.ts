@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HomeQuestionsComponent } from './home-questions/home-questions.component';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { QuestionItemComponent } from './question-item/question-item.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { QuestionItemComponent } from './question-item/question-item.component';
   imports: [
     CommonModule,
     QnaRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   exports: [
     QuestionDetailComponent,

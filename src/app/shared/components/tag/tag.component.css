@@ -1,0 +1,8 @@
+div {
+    border-radius: 3px;
+    background-color: rgb(178, 220, 236);
+    padding: 3px 8px 5px 8px;
+    font-size: 14px;
+    color: rgb(24, 79, 110);
+    cursor: pointer;
+}
