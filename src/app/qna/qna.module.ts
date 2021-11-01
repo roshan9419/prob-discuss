@@ -9,13 +9,15 @@ import { QuestionDetailComponent } from './question-detail/question-detail.compo
 import { QuestionItemComponent } from './question-item/question-item.component';
 import { SharedModule } from '../shared/shared.module';
 import { QuillModule } from 'ngx-quill';
+import { AnswersComponent } from './answers/answers.component';
 
 @NgModule({
   declarations: [
     QuestionDetailComponent,
     HomeQuestionsComponent,
     QuestionItemComponent,
-    AddQuestionComponent
+    AddQuestionComponent,
+    AnswersComponent
   ],
   imports: [
     CommonModule,

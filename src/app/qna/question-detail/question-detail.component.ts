@@ -43,34 +43,10 @@ export class QuestionDetailComponent implements OnInit {
   async getQuestion() {
     try {
       this.question = await this.dbService.getQuestionById(this.questionId);
-      this.answersList = await this.dbService.fetchAnswersByQuestionId(this.questionId, AnswerType.MOST_RECENT);
       this.isLoading = false;
     } catch (e) {
       console.log(e);
       this.route.navigateByUrl('404');
-    }
-  }
-
-  async addAnswer() {
-    if (!this.answer.content) return;
-    try {
-      const user = await this.authService.auth.currentUser;
-      if (!user) {
-        this.publishedStatus = "You're not logged in";
-        return;
-      }
-      this.answer.questionId = this.questionId;
-      this.answer.userId = user!.uid;
-      this.answer.username = user!.displayName!;
-      this.answer.answeredDate = new Date();
-
-      await this.dbService.addAnswer(this.answer);
-      this.clearFields();
-      this.publishedStatus = 'Answer published successfuly';
-      setTimeout(() => this.publishedStatus = '', 2000);
-    } catch (e) {
-      console.log(e);
-      this.publishedStatus = 'Something went wrong, please try again.';
     }
   }
 

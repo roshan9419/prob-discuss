@@ -1,0 +1,26 @@
+<div *ngIf="isLoading else showAns">
+    <p>Loading Answers...</p>
+</div>
+
+<ng-template #showAns>
+    <div *ngFor="let ans of answers">
+        <quill-view-html [content]="ans.content" theme="snow"></quill-view-html>
+    </div>
+
+    <div class="container m-3">
+        <div class="m-3" style="height: 250px">
+            <h5>Your Answer</h5>
+            <form (ngSubmit)="addAnswer()">
+                <div class="form-group my-3">
+                    <quill-editor [styles]="{'min-height': '120px'}" [maxLength]="1000" id="editor" (onContentChanged)="onEditorChange($event)"></quill-editor>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!answer.content">Post your
+                    Answer</button>
+            </form>
+            <div>
+                {{ publishedStatus }}
+            </div>
+            <hr>
+        </div>
+    </div>
+</ng-template>

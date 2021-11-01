@@ -84,6 +84,8 @@ export class AddQuestionComponent implements OnInit {
     this.question.title = '';
     this.question.content = '';
     this.tags = '';
+    document.getElementsByClassName("ql-editor")[0].innerHTML = "";
+    this.question = new Question();
   }
 
 }
