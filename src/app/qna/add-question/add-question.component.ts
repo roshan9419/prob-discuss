@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentChange } from 'ngx-quill';
 import { Question } from 'src/app/core/models/question';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
@@ -20,6 +21,11 @@ export class AddQuestionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  onEditorChange(event: ContentChange) {
+    this.question.content = event.html || '';
+    console.log(event);
   }
 
   async onSubmit() {

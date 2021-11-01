@@ -8,25 +8,36 @@ import { HomeQuestionsComponent } from './home-questions/home-questions.componen
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { QuestionItemComponent } from './question-item/question-item.component';
 import { SharedModule } from '../shared/shared.module';
-
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
-    QuestionDetailComponent, 
-    HomeQuestionsComponent, 
-    QuestionItemComponent, 
+    QuestionDetailComponent,
+    HomeQuestionsComponent,
+    QuestionItemComponent,
     AddQuestionComponent
   ],
   imports: [
     CommonModule,
     QnaRoutingModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    QuillModule.forRoot({
+      modules: {
+        'toolbar': [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ 'script': 'super' }, { 'script': 'sub' }],
+          [{ 'header': 1 }, { 'header': 2 }, 'blockquote', 'code-block'],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+          ['link', 'formula'],
+        ]
+      }
+    })
   ],
   exports: [
     QuestionDetailComponent,
-    HomeQuestionsComponent, 
-    QuestionItemComponent, 
+    HomeQuestionsComponent,
+    QuestionItemComponent,
     AddQuestionComponent
   ]
 })

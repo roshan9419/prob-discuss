@@ -7,9 +7,8 @@
             <input type="text" class="form-control" name="title" id="title" [(ngModel)]="question.title">
         </div>
         <div class="form-group my-3">
-            <label for="content">Describe your problem</label>
-            <textarea type="text" class="form-control" name="content" id="content"
-                [(ngModel)]="question.content"></textarea>
+            <label for="editor">Describe your problem</label>
+            <quill-editor [maxLength]="1000" id="editor" (onContentChanged)="onEditorChange($event)"></quill-editor>
         </div>
         <div class="form-group my-3">
             <label for="tags">Tags (Separated by ,)</label>
@@ -17,12 +16,14 @@
         </div>
         <div class="form-group mb-3">
             <label for="files" class="form-label">Multiple files input example</label>
-            <input class="form-control" type="file" accept="image/*" id="files" (change)="onFilesChange($event)" multiple>
-          </div>
+            <input class="form-control" type="file" accept="image/*" id="files" (change)="onFilesChange($event)"
+                multiple>
+        </div>
         <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!fieldsValid()">Publish Question</button>
         <button type="reset" class="btn btn-danger btn-sm mx-3">Clear</button>
     </form>
     <div>
         {{ publishedStatus }}
     </div>
+    <quill-view-html [content]="question.content" theme="snow"></quill-view-html>
 </div>
