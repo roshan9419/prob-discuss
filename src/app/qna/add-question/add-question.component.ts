@@ -15,6 +15,7 @@ export class AddQuestionComponent implements OnInit {
   question: Question;
   publishedStatus: string = '';
   files: File[] = [];
+  tags: string = '';
 
   constructor(private dbService: DBService, private authService: AuthService, private storageService: StorageService) {
     this.question = new Question();
@@ -25,7 +26,7 @@ export class AddQuestionComponent implements OnInit {
 
   onEditorChange(event: ContentChange) {
     this.question.content = event.html || '';
-    console.log(event);
+    if (event.text.trim().length === 0) this.question.content = '';
   }
 
   async onSubmit() {
@@ -38,6 +39,9 @@ export class AddQuestionComponent implements OnInit {
       this.question.userId = user!.uid;
       this.question.username = user!.displayName!;
       this.question.askedDate = new Date();
+      if (this.tags.length !== 0) {
+        this.question.tags = this.tags.split(',');
+      }
 
       const questionId: string = await this.dbService.addQuestion(this.question);
       if (this.files.length !== 0) {
@@ -79,7 +83,7 @@ export class AddQuestionComponent implements OnInit {
   clearFields() {
     this.question.title = '';
     this.question.content = '';
-    this.question.tags = '';
+    this.tags = '';
   }
 
 }

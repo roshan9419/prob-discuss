@@ -20,6 +20,8 @@ export class QuestionDetailComponent implements OnInit {
   publishedStatus = ''
   answersList: Answer[] = []
 
+  isLoading: boolean = true;
+
   constructor(private activatedroute: ActivatedRoute, private route: Router, private dbService: DBService, private authService: AuthService, private storageService: StorageService) {
     this.question = new Question();
     this.answer = new Answer();
@@ -42,6 +44,7 @@ export class QuestionDetailComponent implements OnInit {
     try {
       this.question = await this.dbService.getQuestionById(this.questionId);
       this.answersList = await this.dbService.fetchAnswersByQuestionId(this.questionId, AnswerType.MOST_RECENT);
+      this.isLoading = false;
     } catch (e) {
       console.log(e);
       this.route.navigateByUrl('404');

@@ -1,4 +1,10 @@
-div {
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-item {
     border-radius: 3px;
     background-color: rgb(178, 220, 236);
     padding: 3px 8px 5px 8px;

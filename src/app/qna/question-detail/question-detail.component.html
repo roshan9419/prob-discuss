@@ -1,35 +1,41 @@
-<div class="container m-3">
-    <h1>{{ question!.title }}</h1>
-    <hr>
-    <p>{{ question!.content }}</p>
-    <b>Tags</b>
-    <p>{{ question!.tags }}</p>
+<div *ngIf="isLoading else showQues">
+    <p>Loading Question and Answers...</p>
+</div>
 
-    <div class="img-container">
-        <div *ngFor="let imgPath of question!.imgPaths">
-            <!-- <p>{{getImageLink(imgPath)}}</p> -->
-            <img src="{{getImageLink(imgPath)}}" alt="" onclick="window.open(this.src, '_blank');">
-        </div>
-    </div>
-
-    <hr>
-    <div class="m-3">
-        <h5>Your Answer</h5>
-        <form (ngSubmit)="addAnswer()">
-            <div class="form-group my-3">
-                <label for="answer">Describe your answer</label>
-                <input type="text" class="form-control" name="answer" id="answer" [(ngModel)]="answer.content">
-            </div>
-            <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!answer.content">Post your
-                Answer</button>
-            <button type="reset" class="btn btn-danger btn-sm mx-3">Clear</button>
-        </form>
-        <div>
-            {{ publishedStatus }}
-        </div>
+<ng-template #showQues>
+    <div class="container m-3">
+        <h1>{{ question!.title }}</h1>
         <hr>
+        <quill-view-html [content]="question!.content" theme="snow"></quill-view-html>
+        <b>Tags</b>
+        <app-tags class="container" [tags]="question!.tags"></app-tags>
+    
+        <div class="img-container">
+            <div *ngFor="let imgPath of question!.imgPaths">
+                <!-- <p>{{getImageLink(imgPath)}}</p> -->
+                <img src="{{getImageLink(imgPath)}}" alt="" onclick="window.open(this.src, '_blank');">
+            </div>
+        </div>
+    
+        <hr>
+        <div class="m-3">
+            <h5>Your Answer</h5>
+            <form (ngSubmit)="addAnswer()">
+                <div class="form-group my-3">
+                    <label for="answer">Describe your answer</label>
+                    <input type="text" class="form-control" name="answer" id="answer" [(ngModel)]="answer.content">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!answer.content">Post your
+                    Answer</button>
+                <button type="reset" class="btn btn-danger btn-sm mx-3">Clear</button>
+            </form>
+            <div>
+                {{ publishedStatus }}
+            </div>
+            <hr>
+        </div>
     </div>
-</div>
-<div *ngFor="let answer of answersList">
-    <p>{{answer.content}}</p>
-</div>
+    <div *ngFor="let answer of answersList">
+        <p>{{answer.content}}</p>
+    </div>
+</ng-template>
