@@ -16,6 +16,12 @@ export class QuestionItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getQuestionDesc() {
+    const htmlEl = document.createElement('body');
+    htmlEl.innerHTML = this.questionItem.content;
+    return htmlEl.innerText;
+  }
+
   onViewQuestion() {
     this.router.navigateByUrl(`/question/${this.questionItem.questionId}`);
   }

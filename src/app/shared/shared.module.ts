@@ -7,7 +7,6 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { TagsComponent } from './components/tags/tags.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 
-
 @NgModule({
   declarations: [
     UserDpComponent,

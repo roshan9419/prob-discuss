@@ -1,7 +1,8 @@
 <div class="container">
     <a class="qtitle" [routerLink]="'/question/' + questionItem.questionId">{{ questionItem.title }}</a><br>
-    <p>{{ questionItem.content }}</p>
+    <p class="content">{{ getQuestionDesc() }}</p>
     
     <app-tags [tags]="questionItem.tags"></app-tags>
-    <p>Asked by: {{ questionItem.username }} on {{ questionItem.askedDate | dateAgo }}</p>
+    <p>Asked by: {{ questionItem.username }} on {{ questionItem.askedDate | dateAgo}}</p>
+    
 </div>
