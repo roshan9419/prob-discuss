@@ -1,5 +1,9 @@
 <div *ngIf="isLoading else showQues">
-    <p>Loading Question and Answers...</p>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 </div>
 
 <ng-template #showQues>
@@ -9,15 +13,15 @@
         <quill-view-html [content]="question!.content" theme="snow"></quill-view-html>
         <b>Tags</b>
         <app-tags class="container" [tags]="question!.tags"></app-tags>
-    
+
         <div class="img-container">
             <div *ngFor="let imgPath of question!.imgPaths">
                 <!-- <p>{{getImageLink(imgPath)}}</p> -->
                 <img src="{{getImageLink(imgPath)}}" alt="" onclick="window.open(this.src, '_blank');">
             </div>
         </div>
-    
+
         <hr>
-        <app-answers [questionId]="question!.questionId" ></app-answers>
+        <app-answers [question]="question!"></app-answers>
     </div>
 </ng-template>

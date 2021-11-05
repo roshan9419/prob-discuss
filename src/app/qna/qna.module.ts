@@ -10,7 +10,6 @@ import { QuestionItemComponent } from './question-item/question-item.component';
 import { SharedModule } from '../shared/shared.module';
 import { QuillModule } from 'ngx-quill';
 import { AnswersComponent } from './answers/answers.component';
-import { AnswerComponent } from './answer/answer.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import { AnswerComponent } from './answer/answer.component';
     HomeQuestionsComponent,
     QuestionItemComponent,
     AddQuestionComponent,
-    AnswersComponent,
-    AnswerComponent
+    AnswersComponent
   ],
   imports: [
     CommonModule,

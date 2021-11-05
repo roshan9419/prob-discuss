@@ -9,7 +9,7 @@ export class Question {
     tags?: string[]
     imgPaths?: string[]
     upvotes?: string[]
-    askedDate!: Timestamp<Date>
+    askedDate!: Date
 
     toJson() {
         return Object.assign({}, this);

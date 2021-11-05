@@ -1,54 +1,86 @@
-<section id="content" class="container">
-    <div class="page-heading">
-        <div>
-            <div class="media-left">
-                <img src="{{user.photoUrl}}" alt="...">
-            </div>
-            <div class="media-body">
-                <h2 class="media-heading">{{user.username}}</h2>
-                <p class="lead">Lorem ipsum dolor sit amet ctetur adicing elit, sed do eiusmod tempor incididunt</p>
-            </div>
-        </div>
+<div class="spinner-container" *ngIf="isProfileLoading else showProfile">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel">
-                <div class="panel-heading">
-                    <span class="panel-icon"><i class="fa fa-star"></i></span>
-                    <span class="panel-title"> User Stats</span>
+<ng-template #showProfile>
+    <section id="content" class="container">
+        <div class="page-heading">
+            <div>
+                <div class="media-left">
+                    <img src="{{user.photoUrl}}" alt="..." width="120px" height="120px">
                 </div>
-                <div class="panel-body">
-                    <p>User stats panel body</p>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="panel-heading">
-                    <span class="panel-icon"><i class="fa fa-trophy"></i></span>
-                    <span class="panel-title"> Skills</span>
-                </div>
-                <div class="panel-body">
-                    <p>Skills panel body</p>
+                <div class="media-body">
+                    <h2 class="media-heading">{{user.username}}</h2>
+                    <p class="lead"><i class="fa fa-birthday-cake"></i> Joined {{user.registeredDate | dateAgo}}</p>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-8">
-            <div class="my-3">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page">Activity</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Link</a>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="panel-icon">
+                            <i class="fa fa-star"></i></span>
+                        <span class="panel-title"> User Stats</span>
+                    </div>
+                    <div class="panel-body">
+                        <p>User stats panel body</p>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="panel-icon"><i class="fa fa-trophy"></i></span>
+                        <span class="panel-title"> Skills</span>
+                        <button class="btn btn-sm skill-edit-btn">
+                            <span class="panel-icon"><i class="fa fa-edit"></i></span>
+                            <span class="panel-title"> Edit/Add</span>
+                        </button>
+                    </div>
+                    <div class="panel-body">
+                        <span class="badge badge-pill badge-dark"
+                            style="background-color: rgb(103, 53, 241); cursor: pointer;"
+                            *ngFor="let skill of ['android','flutter','firebase','nodejs','angular','python','c++']">
+                            {{skill}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <p>Your Activity</p>
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" *ngFor="let tab of activityTabs; let first = first;"
+                        [ngClass]="{firstItem: first}" role="tab">
+                        <a class="nav-link" [class.active]="selectedActTab === tab" (click)="selectedActTab = tab"
+                            aria-controls="questions" role="tab" data-toggle="tab">{{tab}}</a>
                     </li>
                 </ul>
-            </div>
 
-            <div *ngFor="let question of questionsList">
-                <a (click)="onViewQuestion(question.questionId)"><b>{{question.title}}</b></a><br>
-                <i>{{question.content }}</i>
+                <div class="tab-content">
+                    <div class="my-3"></div>
+                    <div *ngIf="selectedActTab === activityTabs[0]" role="tabpanel" class="tab-pane active"
+                        id="questions">
+                        <div class="ques-item" *ngFor="let question of questionsList">
+                            <i class="fa fa-question-circle"></i><a (click)="onViewQuestion(question.questionId)">
+                                {{question.title}}</a>
+                        </div>
+                    </div>
+                    <div *ngIf="selectedActTab === activityTabs[1]" role="tabpanel" class="tab-pane active"
+                        id="answers">
+                        <div class="ques-item" *ngFor="let answer of answersList">
+                            <i class="fa fa-reply-all"></i><i class="fab fa-autoprefixer"></i><a (click)="onViewQuestion(answer.questionId)">
+                                {{answer.questionTitle}}</a>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</ng-template>

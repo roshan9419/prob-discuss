@@ -6,13 +6,15 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { SharedRoutingModule } from './shared-routing.module';
 import { TagsComponent } from './components/tags/tags.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { RectPhotoNameComponent } from './components/rect-photo-name/rect-photo-name.component';
 
 @NgModule({
   declarations: [
     UserDpComponent,
     PageNotFoundComponent,
     TagsComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    RectPhotoNameComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
     UserDpComponent,
     PageNotFoundComponent,
     TagsComponent,
+    RectPhotoNameComponent,
     DateAgoPipe
   ]
 })

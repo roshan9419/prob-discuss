@@ -30,6 +30,9 @@ img {
     position: relative;
     padding: 15px;
     border: 1px solid #e2e2e2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .panel-heading {
@@ -58,4 +61,32 @@ img {
 .media-body {
     display: table-cell;
     vertical-align: top;
+}
+
+.spinner-container {
+    width: 100%; 
+    height: 50vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-edit-btn {
+    float: right;
+    margin-top: 10px;
+}
+
+.skill-input {
+/*  */
+}
+
+.nav-item {
+    cursor: pointer;
+}
+
+.ques-item {
+    text-decoration: none;
+    color: royalblue;
+    cursor: pointer;
+    margin-bottom: 20px;
 }

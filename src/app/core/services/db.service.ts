@@ -113,7 +113,21 @@ export class DBService {
     querySnapshot.docs.forEach(answerDoc => {
       answers.push(answerDoc.data());
     });
-    console.log(answers);
     return answers;
+  }
+
+  async fetchUserAnswers(userId: string, limit: number = 10) {
+    const query = this.db
+      .collection<Answer>('answers').ref
+      .where('userId', '==', userId)
+      .orderBy('answeredDate', 'desc')
+      .limit(limit);
+
+      const answers: Answer[] = [];
+      const querySnapshot = await query.get();
+      querySnapshot.docs.forEach(answerDoc => {
+        answers.push(answerDoc.data());
+      });
+      return answers;
   }
 }

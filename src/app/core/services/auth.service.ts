@@ -18,6 +18,8 @@ export class AuthService {
     return user != null && user.uid != null;
   }
 
+  getUser = async () => await this.auth.currentUser;
+
   async googleLoginIn() {
     const response = await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     const user = response.user!;

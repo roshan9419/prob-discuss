@@ -3,11 +3,19 @@
 </div>
 
 <ng-template #showAns>
-    <div *ngFor="let ans of answers">
+    <h4>{{answers.length}} answers</h4>
+
+    <div class="ans-container" *ngFor="let ans of answers">
+        <div *ngIf="ans.userId === currentUserId">
+            <b>Your Answer</b>
+        </div>
         <quill-view-html [content]="ans.content" theme="snow"></quill-view-html>
+        <div>
+            <app-rect-photo-name []></app-rect-photo-name>
+        </div>
     </div>
 
-    <div class="container m-3">
+    <div *ngIf="isUserAllowedToAns" class="container m-3">
         <div class="m-3" style="height: 250px">
             <h5>Your Answer</h5>
             <form (ngSubmit)="addAnswer()">

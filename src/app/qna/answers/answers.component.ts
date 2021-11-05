@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ContentChange } from 'ngx-quill';
 import { Answer } from 'src/app/core/models/answer';
 import { AnswerType } from 'src/app/core/models/enums/answerType';
+import { Question } from 'src/app/core/models/question';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
 
@@ -12,12 +13,14 @@ import { DBService } from 'src/app/core/services/db.service';
 })
 export class AnswersComponent implements OnInit {
 
-  @Input() questionId: string = '';
+  @Input() question!: Question;
 
   answers: Answer[] = [];
   publishedStatus: string = '';
+  currentUserId: string = '';
 
   isLoading: boolean = true;
+  isUserAllowedToAns: boolean = false;
 
   answer: Answer = new Answer();
 
@@ -29,8 +32,15 @@ export class AnswersComponent implements OnInit {
 
   async fetchAnswers() {
     try {
-      this.answers = await this.dbService.fetchAnswersByQuestionId(this.questionId, AnswerType.MOST_RECENT);
+      this.answers = await this.dbService.fetchAnswersByQuestionId(this.question.questionId, AnswerType.MOST_RECENT);
       this.isLoading = false;
+      const user = await this.authService.auth.currentUser;
+      if (!user) {
+        this.isUserAllowedToAns = false;
+      } else {
+        this.currentUserId = user.uid;
+        this.isUserAllowedToAns = user.uid !== this.question.userId;
+      }
     } catch (e) {
       console.log(e);
     }
@@ -44,7 +54,8 @@ export class AnswersComponent implements OnInit {
         this.publishedStatus = "You're not logged in";
         return;
       }
-      this.answer.questionId = this.questionId;
+      this.answer.questionId = this.question.questionId;
+      this.answer.questionTitle = this.question.title;
       this.answer.userId = user!.uid;
       this.answer.username = user!.displayName!;
       this.answer.answeredDate = new Date();

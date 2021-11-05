@@ -12,10 +12,12 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth.service';
 import { DBService } from './services/db.service';
 import { StorageService } from './services/storage.service';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { StorageService } from './services/storage.service';
     StorageService
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ]
 })
 export class CoreModule { }

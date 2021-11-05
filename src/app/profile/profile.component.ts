@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Answer } from '../core/models/answer';
 import { Question } from '../core/models/question';
 import { User } from '../core/models/user';
 import { DBService } from '../core/services/db.service';
@@ -11,8 +12,19 @@ import { DBService } from '../core/services/db.service';
 })
 export class ProfileComponent implements OnInit {
 
+  active = 1;
+  activityTabs: string[] = ['Questions','Answers'];
+  selectedActTab = this.activityTabs[0];
+
   user: User = new User();
+
   questionsList: Question[] = [];
+  answersList: Answer[] = [];
+
+  isProfileLoading: boolean = true;
+  isActivityLoading: boolean = true;
+
+  currentActIndex: number = 0;
 
   constructor(private activatedroute: ActivatedRoute, private route: Router, private dbService: DBService) { }
 
@@ -34,19 +46,37 @@ export class ProfileComponent implements OnInit {
     try {
       const res = await this.dbService.getUser(this.user.userId);
       if (res) this.user = res;
+      this.isProfileLoading = false;
       this.loadUserQuestions();
+      this.loadUserAnswers();
     } catch (error) {
       this.route.navigateByUrl('404');
     }
   }
 
   async loadUserQuestions() {
-    this.questionsList = await this.dbService.fetchUserQuestions(this.user.userId);
-  
+    this.questionsList = await this.dbService.fetchUserQuestions(this.user.userId);  
+  }
+
+  async loadUserAnswers() {
+    this.answersList = await this.dbService.fetchUserAnswers(this.user.userId);  
   }
 
   onViewQuestion(questionId: string) {
     this.route.navigateByUrl(`/question/${questionId}`);
+  }
+
+  switchTab(index: number) {
+    if (index === this.currentActIndex) return;
+    console.log("Switched to Tab", index);
+    if (index === 0) {
+      // fetch questions
+      this.loadUserQuestions();
+    } else {
+      // fetch answers
+      this.loadUserAnswers();
+    }
+    this.currentActIndex = index;
   }
 
 }

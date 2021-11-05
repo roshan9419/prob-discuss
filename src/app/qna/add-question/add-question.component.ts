@@ -38,7 +38,7 @@ export class AddQuestionComponent implements OnInit {
       }
       this.question.userId = user!.uid;
       this.question.username = user!.displayName!;
-      // this.question.askedDate = new Date();
+      this.question.askedDate = new Date();
       if (this.tags.length !== 0) {
         this.question.tags = this.tags.split(',');
       }
