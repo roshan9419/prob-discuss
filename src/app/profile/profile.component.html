@@ -6,13 +6,13 @@
 
 <ng-template #showProfile>
     <section id="content" class="container">
-        <div class="page-heading">
+        <div class="profile-header">
             <div>
-                <div class="media-left">
+                <div class="profile-photo">
                     <img src="{{user.photoUrl}}" alt="..." width="120px" height="120px">
                 </div>
-                <div class="media-body">
-                    <h2 class="media-heading">{{user.username}}</h2>
+                <div class="profile-body">
+                    <h2 class="profile-heading">{{user.username}}</h2>
                     <p class="lead"><i class="fa fa-birthday-cake"></i> Joined {{user.registeredDate | dateAgo}}</p>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                     <div *ngIf="selectedActTab === activityTabs[1]" role="tabpanel" class="tab-pane active"
                         id="answers">
                         <div class="ques-item" *ngFor="let answer of answersList">
-                            <i class="fa fa-reply-all"></i><i class="fab fa-autoprefixer"></i><a (click)="onViewQuestion(answer.questionId)">
+                            <i class="fa fa-reply-all"></i><a (click)="onViewQuestion(answer.questionId)">
                                 {{answer.questionTitle}}</a>
                         </div>
                     </div>
