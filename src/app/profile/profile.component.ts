@@ -46,9 +46,9 @@ export class ProfileComponent implements OnInit {
     try {
       const res = await this.dbService.getUser(this.user.userId);
       if (res) this.user = res;
+      await this.loadUserQuestions();
+      await this.loadUserAnswers();
       this.isProfileLoading = false;
-      this.loadUserQuestions();
-      this.loadUserAnswers();
     } catch (error) {
       this.route.navigateByUrl('404');
     }
