@@ -1,0 +1,14 @@
+footer {
+    background-color: rgb(126, 188, 243);
+}
+
+#header-links {
+    text-decoration: none;
+    font-variant: small-caps;
+    color: white;
+}
+
+.social-handles-container {
+    display: inline-flex;
+    justify-content: center;
+}
