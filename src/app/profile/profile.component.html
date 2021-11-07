@@ -27,24 +27,52 @@
                         <span class="panel-title"> User Stats</span>
                     </div>
                     <div class="panel-body">
-                        <p>User stats panel body</p>
+                        <div class="stats-container">
+                            <span>
+                                <div>{{questionsList.length}}</div>
+                                <div>Questions</div>
+                            </span>
+                            <span>
+                                <div>{{answersList.length}}</div>
+                                <div>Answers</div>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="panel">
                     <div class="panel-heading">
                         <span class="panel-icon"><i class="fa fa-trophy"></i></span>
                         <span class="panel-title"> Skills</span>
-                        <button class="btn btn-sm skill-edit-btn">
-                            <span class="panel-icon"><i class="fa fa-edit"></i></span>
-                            <span class="panel-title"> Edit/Add</span>
-                        </button>
+                        <div class="skill-edit-btn">
+                            <a *ngIf="isEditSkillEnabled" class="btn btn-success btn-sm mx-1"
+                                (click)="saveUserSkills()">
+                                <span><i class="fa fa-save"></i></span>
+                                <span> Save </span>
+                            </a>
+                            <a class="{{isEditSkillEnabled ? 'btn btn-danger' : 'btn' }} btn-sm"
+                                (click)="toggleEditSkillBtn()">
+                                <span><i class="fa {{isEditSkillEnabled ? 'fa-window-close' : 'fa-edit'}}"></i></span>
+                                <span class="panel-title"> {{ isEditSkillEnabled ? 'Cancel' : 'Edit/Add'}}</span>
+                            </a>
+                        </div>
                     </div>
                     <div class="panel-body">
-                        <span class="badge badge-pill badge-dark"
-                            style="background-color: rgb(103, 53, 241); cursor: pointer;"
-                            *ngFor="let skill of ['android','flutter','firebase','nodejs','angular','python','c++']">
-                            {{skill}}
+                        <span class="badge" style="background-color: rgb(103, 53, 241); cursor: pointer;"
+                            *ngFor="let skill of userEditSkills">
+                            {{ isEditSkillEnabled ? (skill + ' x') : skill }}
                         </span>
+
+                        <div *ngIf="userEditSkills.length === 0">
+                            You haven't added any skills
+                        </div>
+
+                        <div class="input-group mt-3" *ngIf="isEditSkillEnabled">
+                            <input type="text" class="form-control" placeholder="Type your skill, eg: Python"
+                                aria-label="Skill" aria-describedby="basic-addon2" [(ngModel)]="skillInp">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" (click)="addNewSkill()">+ Add</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,8 +81,7 @@
                 <p>Your Activity</p>
 
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item" *ngFor="let tab of activityTabs; let first = first;"
-                        [ngClass]="{firstItem: first}" role="tab">
+                    <li class="nav-item" *ngFor="let tab of activityTabs;" role="tab">
                         <a class="nav-link" [class.active]="selectedActTab === tab" (click)="selectedActTab = tab"
                             aria-controls="questions" role="tab" data-toggle="tab">{{tab}}</a>
                     </li>

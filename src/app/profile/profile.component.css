@@ -78,7 +78,6 @@ img {
 
 .skill-edit-btn {
     float: right;
-    margin-top: 10px;
 }
 
 .skill-input {
@@ -94,4 +93,22 @@ img {
     color: royalblue;
     cursor: pointer;
     margin-bottom: 20px;
+}
+
+.stats-container {
+    display: flex;
+}
+.stats-container span {
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.stats-container span div:nth-child(1) {
+    font-size: 20px;
+    font-weight: bold;
+    color: #999999;
+}
+.stats-container span div:nth-child(2) {
+    font-size: 14px;
+    color: #555555;
 }

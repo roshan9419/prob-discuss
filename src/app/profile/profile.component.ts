@@ -12,9 +12,8 @@ import { DBService } from '../core/services/db.service';
 })
 export class ProfileComponent implements OnInit {
 
-  active = 1;
-  activityTabs: string[] = ['Questions','Answers'];
-  selectedActTab = this.activityTabs[0];
+  activityTabs: string[] = ['Questions', 'Answers'];
+  selectedActTab: string = this.activityTabs[0];
 
   user: User = new User();
 
@@ -22,9 +21,12 @@ export class ProfileComponent implements OnInit {
   answersList: Answer[] = [];
 
   isProfileLoading: boolean = true;
-  isActivityLoading: boolean = true;
 
-  currentActIndex: number = 0;
+  // Skills
+  isEditSkillEnabled: boolean = false;
+  userEditSkills: string[] = [];
+  skillInp: string = '';
+
 
   constructor(private activatedroute: ActivatedRoute, private route: Router, private dbService: DBService) { }
 
@@ -45,7 +47,10 @@ export class ProfileComponent implements OnInit {
   async loadProfile() {
     try {
       const res = await this.dbService.getUser(this.user.userId);
-      if (res) this.user = res;
+      if (res) {
+        this.user = res;
+        this.userEditSkills = this.user.skills || [];
+      }
       await this.loadUserQuestions();
       await this.loadUserAnswers();
       this.isProfileLoading = false;
@@ -55,28 +60,36 @@ export class ProfileComponent implements OnInit {
   }
 
   async loadUserQuestions() {
-    this.questionsList = await this.dbService.fetchUserQuestions(this.user.userId);  
+    this.questionsList = await this.dbService.fetchUserQuestions(this.user.userId);
   }
 
   async loadUserAnswers() {
-    this.answersList = await this.dbService.fetchUserAnswers(this.user.userId);  
+    this.answersList = await this.dbService.fetchUserAnswers(this.user.userId);
   }
 
   onViewQuestion(questionId: string) {
     this.route.navigateByUrl(`/question/${questionId}`);
   }
 
-  switchTab(index: number) {
-    if (index === this.currentActIndex) return;
-    console.log("Switched to Tab", index);
-    if (index === 0) {
-      // fetch questions
-      this.loadUserQuestions();
-    } else {
-      // fetch answers
-      this.loadUserAnswers();
+  toggleEditSkillBtn() {
+    this.isEditSkillEnabled = !this.isEditSkillEnabled;
+    if (!this.isEditSkillEnabled) {
+      this.userEditSkills = this.user.skills || [];
     }
-    this.currentActIndex = index;
+  }
+
+  async saveUserSkills() {
+    this.user.skills = this.userEditSkills;
+    await this.dbService.updateUser(this.user);
+    this.isEditSkillEnabled = false;
+  }
+
+  addNewSkill() {
+    console.log(this.skillInp);
+    if (this.skillInp) {
+      this.userEditSkills.push(this.skillInp);
+      this.skillInp = '';
+    }
   }
 
 }

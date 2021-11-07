@@ -14,6 +14,10 @@ export class DBService {
     console.log("DBService Initialized");
   }
 
+  toJson(data: Object) {
+    return Object.assign({}, data);
+  }
+
   async isUserExists(userId: string) {
     return (await this.db.collection('users').ref.doc(userId).get()).exists;
   }
@@ -27,7 +31,8 @@ export class DBService {
   }
 
   async updateUser(user: User) {
-    await this.db.collection('users').doc(user.userId).ref.set(user.toJson());
+    console.log(user);
+    await this.db.collection('users').doc(user.userId).ref.set(this.toJson(user));
   }
 
   async addQuestion(question: Question) {

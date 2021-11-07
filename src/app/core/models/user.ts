@@ -4,6 +4,7 @@ export class User {
     email?: string | null
     photoUrl?: string
     about?: string
+    skills?: string[]
     occupation?: string
     githubLink?: string
     registeredDate!: Date
