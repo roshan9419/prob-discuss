@@ -34,6 +34,7 @@ export class AnswersComponent implements OnInit {
     try {
       this.answers = await this.dbService.fetchAnswersByQuestionId(this.question.questionId, AnswerType.MOST_RECENT);
       this.isLoading = false;
+      console.log(this.answers);
       const user = await this.authService.auth.currentUser;
       if (!user) {
         this.isUserAllowedToAns = false;

@@ -49,7 +49,9 @@ export class ProfileComponent implements OnInit {
       const res = await this.dbService.getUser(this.user.userId);
       if (res) {
         this.user = res;
-        this.userEditSkills = this.user.skills || [];
+        if (this.user.skills) {
+          this.user.skills?.forEach(skill => this.userEditSkills.push(skill));
+        }
       }
       await this.loadUserQuestions();
       await this.loadUserAnswers();
@@ -74,7 +76,12 @@ export class ProfileComponent implements OnInit {
   toggleEditSkillBtn() {
     this.isEditSkillEnabled = !this.isEditSkillEnabled;
     if (!this.isEditSkillEnabled) {
-      this.userEditSkills = this.user.skills || [];
+      console.log(this.user.skills);
+      if (this.user.skills) {
+        this.userEditSkills = [];
+        this.user.skills?.forEach(skill => this.userEditSkills.push(skill));
+      }
+      console.log("Cancel Tapped");
     }
   }
 
@@ -89,6 +96,16 @@ export class ProfileComponent implements OnInit {
     if (this.skillInp) {
       this.userEditSkills.push(this.skillInp);
       this.skillInp = '';
+    }
+  }
+
+  onSkillTapped(skill: string) {
+    console.log(skill);
+    if (!this.isEditSkillEnabled) return;
+    const skillIdx = this.userEditSkills.indexOf(skill);
+    console.log(skillIdx);
+    if (skillIdx !== -1) {
+      this.userEditSkills.splice(skillIdx, 1);
     }
   }
 
