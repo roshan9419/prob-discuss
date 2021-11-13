@@ -1,0 +1,13 @@
+.container {
+    border: 1px solid blueviolet;
+}
+
+.card {
+    background-color: antiquewhite;
+    float: right;
+    margin-right: 10px;
+}
+
+.card-body {
+    padding: 10px;
+}

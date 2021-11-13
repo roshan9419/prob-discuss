@@ -3,7 +3,7 @@
 </div>
 
 <ng-template #showAns>
-    <h4>{{answers.length}} answers</h4>
+    <h4>{{answers.length === 0 ? 'No answers yet' : answers.length === 1 ? '1 answer' : (answers.length + ' answers')}}</h4>
 
     <div class="ans-container" *ngFor="let ans of answers">
         <div *ngIf="ans.userId === currentUserId">
@@ -11,7 +11,6 @@
         </div>
         <quill-view-html [content]="ans.content" theme="snow"></quill-view-html>
         <div>
-            <!-- <app-rect-photo-name []></app-rect-photo-name> -->
         </div>
     </div>
 

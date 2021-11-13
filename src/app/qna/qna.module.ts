@@ -10,6 +10,7 @@ import { QuestionItemComponent } from './question-item/question-item.component';
 import { SharedModule } from '../shared/shared.module';
 import { QuillModule } from 'ngx-quill';
 import { AnswersComponent } from './answers/answers.component';
+import { QnaUserInfoComponent } from './qna-user-info/qna-user-info.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AnswersComponent } from './answers/answers.component';
     HomeQuestionsComponent,
     QuestionItemComponent,
     AddQuestionComponent,
-    AnswersComponent
+    AnswersComponent,
+    QnaUserInfoComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { AnswersComponent } from './answers/answers.component';
     QuestionDetailComponent,
     HomeQuestionsComponent,
     QuestionItemComponent,
-    AddQuestionComponent
+    AddQuestionComponent,
+    QnaUserInfoComponent
   ]
 })
 export class QnaModule { }
