@@ -10,7 +10,7 @@ import { User } from '../models/user';
 })
 export class DBService {
 
-  constructor(private db: AngularFirestore) { 
+  constructor(private db: AngularFirestore) {
     console.log("DBService Initialized");
   }
 
@@ -77,18 +77,48 @@ export class DBService {
     return questions;
   }
 
-  async fetchRecentQuestions(lastFetchedId?: any, limit = 20) {
-    let query = this.db.collection<Question>('questions').ref.orderBy('askedDate', 'desc').limit(limit);
-    if (lastFetchedId) {
-      query = query.startAfter(lastFetchedId);
+  async fetchRecentQuestions(limitSize: number, isForward: boolean = true, pageToken: string) {
+    let query = this.db.collection<Question>('questions').ref.orderBy('askedDate', 'desc').limit(limitSize + 1);
+
+    if (pageToken) {
+      const docSnap = await this.db.collection('questions').ref.doc(pageToken).get();
+      if (!docSnap.exists) return;
+      query = isForward
+        ? query.startAt(docSnap).limit(limitSize + 1)
+        : query.endBefore(docSnap).limitToLast(limitSize + 1);
     }
 
-    const questions: Question[] = [];
+    let questions: Question[] = [];
     const querySnapshot = await query.get();
     querySnapshot.docs.forEach(questionDoc => {
       questions.push(questionDoc.data());
     });
-    return questions;
+
+    let nextPageToken = null, prevPageToken = null;
+
+    if (isForward) {
+      if (questions.length === limitSize + 1) {
+        nextPageToken = questions[questions.length - 1].questionId;
+        questions.splice(-1); // delete extra last element from list
+      } else {
+        nextPageToken = null;
+      }
+      if (pageToken) prevPageToken = questions[0].questionId;
+    } else {
+      if (questions.length === limitSize + 1) {
+        prevPageToken = questions[1].questionId;
+        questions = questions.slice(1); // delete first element
+      } else {
+        prevPageToken = null;
+      }
+      nextPageToken = pageToken;
+    }
+
+    return {
+      resultList: questions,
+      nextPageToken: nextPageToken,
+      prevPageToken: prevPageToken
+    };
   }
 
   async addAnswer(answer: Answer) {
@@ -128,11 +158,11 @@ export class DBService {
       .orderBy('answeredDate', 'desc')
       .limit(limit);
 
-      const answers: Answer[] = [];
-      const querySnapshot = await query.get();
-      querySnapshot.docs.forEach(answerDoc => {
-        answers.push(answerDoc.data());
-      });
-      return answers;
+    const answers: Answer[] = [];
+    const querySnapshot = await query.get();
+    querySnapshot.docs.forEach(answerDoc => {
+      answers.push(answerDoc.data());
+    });
+    return answers;
   }
 }
