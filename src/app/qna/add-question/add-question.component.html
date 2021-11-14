@@ -1,25 +1,33 @@
-<div class="m-3">
-    <h4>Add Question</h4>
+<div class="container my-3">
+    <h4>Ask a Question</h4>
     <hr>
+
     <form (ngSubmit)="onSubmit()">
-        <div class="form-group my-3">
-            <label for="title">Question Title</label>
-            <input type="text" class="form-control" name="title" id="title" [(ngModel)]="question.title">
+        <div class="form-group mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" placeholder="e.g. How to resolve this issue...?" class="form-control" name="title"
+                id="title" [(ngModel)]="question.title">
         </div>
-        <div class="form-group my-3">
-            <quill-editor [styles]="{'min-height': '120px'}" [maxLength]="1000" id="ql-editor" (onContentChanged)="onEditorChange($event)"></quill-editor>
+        <div class="form-group mb-3">
+            <label for="body" class="form-label">Body</label>
+            <div class="form-group my-3" class="title">
+                <quill-editor [styles]="{'min-height': '120px'}"
+                    placeholder="Describe your problem and include necessary information" [maxLength]="1000"
+                    id="ql-editor" (onContentChanged)="onEditorChange($event)"></quill-editor>
+            </div>
         </div>
-        <div class="form-group my-3">
-            <label for="tags">Tags (Separated by ,)</label>
+        <div class="form-group mb-3">
+            <label for="tags" class="form-label">Tags (Separated by ,)</label>
             <input type="text" class="form-control" name="tags" id="tags" [(ngModel)]="tags">
         </div>
         <div class="form-group mb-3">
-            <label for="files" class="form-label">Multiple files input example</label>
+            <label for="files" class="form-label">Add images describing your problem</label>
             <input class="form-control" type="file" accept="image/*" id="files" (change)="onFilesChange($event)"
                 multiple>
+            <small class="info">(Choose upto 5 images and each must be less then 1mb)</small>
         </div>
         <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!fieldsValid()">Publish Question</button>
-        <button type="reset" class="btn btn-danger btn-sm mx-3">Clear</button>
+        <button type="reset" class="btn btn-danger btn-sm mx-2">Clear</button>
     </form>
     <div>
         {{ publishedStatus }}

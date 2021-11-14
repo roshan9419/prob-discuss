@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class QnaUserInfoComponent implements OnInit {
 
   @Input() name: string | undefined | null = ''
+  @Input() userId: string | undefined | null = ''
   @Input() imageUrl: string = 'https://firebasestorage.googleapis.com/v0/b/probdiscuss-qna.appspot.com/o/users/default?alt=media'
   @Input() date: Date | undefined | null
   @Input() isQues!: boolean

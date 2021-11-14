@@ -12,6 +12,28 @@ import { QuillModule } from 'ngx-quill';
 import { AnswersComponent } from './answers/answers.component';
 import { QnaUserInfoComponent } from './qna-user-info/qna-user-info.component';
 
+var formats = [
+  'background',
+  'bold',
+  'color',
+  'font',
+  'code',
+  'italic',
+  'link',
+  'size',
+  'strike',
+  'script',
+  'underline',
+  'blockquote',
+  'header',
+  'indent',
+  'list',
+  'align',
+  'direction',
+  'code-block',
+  'formula'
+];
+
 @NgModule({
   declarations: [
     QuestionDetailComponent,
@@ -35,7 +57,8 @@ import { QnaUserInfoComponent } from './qna-user-info/qna-user-info.component';
           [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
           ['link', 'formula'],
         ]
-      }
+      },
+      formats: formats
     })
   ],
   exports: [

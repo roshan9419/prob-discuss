@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <app-qna-user-info [name]="question?.username" [isQues]="true" [date]="question?.askedDate"></app-qna-user-info>
+        <app-qna-user-info [name]="question?.username" [userId]="question?.userId" [isQues]="true" [date]="question?.askedDate"></app-qna-user-info>
 
         <hr style="margin-top: 100px;">
         <app-answers [question]="question!"></app-answers>

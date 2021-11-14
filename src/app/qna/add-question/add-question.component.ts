@@ -73,8 +73,19 @@ export class AddQuestionComponent implements OnInit {
     const target = (event.target as HTMLInputElement);
     const fileList = target.files as FileList;
     this.files = [];
+    if (fileList.length > 5) {
+      (<HTMLInputElement>document.getElementById("files")).value = '';
+      alert("Maximum 5 images are allowed");
+      return;
+    }
     for (let i = 0; i < Math.min(5, fileList.length); i++) {
       const file = fileList.item(i);
+      if ((file?.size || 0) > 1000000) {
+        this.files = [];
+        (<HTMLInputElement>document.getElementById("files")).value = '';
+        alert("Some file's size are greater than 1mb");
+        return;
+      }
       if (file) this.files[i] = file;
     }
     console.log(this.files);
