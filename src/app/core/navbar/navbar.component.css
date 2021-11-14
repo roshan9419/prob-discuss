@@ -7,8 +7,9 @@ nav {
 }
 
 .active {
-  /* color: #E5233C !important; */
+  color: rgb(48, 160, 230) !important;
   font-weight: 600;
+  /* color: #E5233C; */
   /* background-color: #E5233C; */
   /* border-radius: 5px; */
 }
