@@ -7,6 +7,7 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { TagsComponent } from './components/tags/tags.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { RectPhotoNameComponent } from './components/rect-photo-name/rect-photo-name.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { RectPhotoNameComponent } from './components/rect-photo-name/rect-photo-
     PageNotFoundComponent,
     TagsComponent,
     DateAgoPipe,
-    RectPhotoNameComponent
+    RectPhotoNameComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { RectPhotoNameComponent } from './components/rect-photo-name/rect-photo-
     PageNotFoundComponent,
     TagsComponent,
     RectPhotoNameComponent,
+    LoaderComponent,
     DateAgoPipe
   ]
 })

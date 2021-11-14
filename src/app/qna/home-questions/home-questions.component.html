@@ -2,10 +2,8 @@
     <h1>Recently Asked Questions</h1>
     <hr>
 </div>
-<div class="spinner-container" *ngIf="isLoading; else showQuestions">
-    <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
+<div *ngIf="isLoading; else showQuestions">
+    <app-loader></app-loader>
 </div>
 
 <ng-template #showQuestions>
