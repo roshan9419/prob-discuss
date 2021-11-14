@@ -3,6 +3,9 @@
     <p class="content">{{ getQuestionDesc() }}</p>
 
     <app-tags [tags]="questionItem.tags"></app-tags>
-    <small>asked {{ questionItem.askedDate | dateAgo}} by </small> <a
-        routerLink="profile/">{{questionItem.username}}</a>
+
+    <div class="user-ques">
+        <small>asked {{ questionItem.askedDate | dateAgo}} by </small>
+        <a class="user" [routerLink]="['/profile', questionItem.userId]">{{questionItem.username}}</a>
+    </div>
 </div>

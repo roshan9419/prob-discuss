@@ -26,6 +26,11 @@ p {
     -webkit-box-orient: vertical;
 }
 
-small {
-    font-size: 10px;
+small, .user {
+    font-size: 12px;
+}
+
+.user-ques {
+    margin-left: auto;
+    width: fit-content;
 }
