@@ -6,7 +6,7 @@ footer {
 #header-links {
     text-decoration: none;
     font-variant: small-caps;
-    color: #E5233C;
+    /* color: #E5233C; */
     font-weight: 600;
 }
 
@@ -16,5 +16,5 @@ footer {
 }
 
 .social-handles-container > a > i {
-    color: #E5233C;
+    /* color: #E5233C; */
 } 

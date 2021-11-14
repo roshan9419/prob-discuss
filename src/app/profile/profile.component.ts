@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Answer } from '../core/models/answer';
 import { Question } from '../core/models/question';
 import { User } from '../core/models/user';
+import { AuthService } from '../core/services/auth.service';
 import { DBService } from '../core/services/db.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class ProfileComponent implements OnInit {
   activityTabs: string[] = ['Questions', 'Answers'];
   selectedActTab: string = this.activityTabs[0];
 
+  loggedUserId: string = ''
   user: User = new User();
 
   questionsList: Question[] = [];
@@ -28,7 +30,7 @@ export class ProfileComponent implements OnInit {
   skillInp: string = '';
 
 
-  constructor(private activatedroute: ActivatedRoute, private route: Router, private dbService: DBService) { }
+  constructor(private activatedroute: ActivatedRoute, private route: Router, private dbService: DBService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.activatedroute.params.subscribe(
@@ -47,9 +49,12 @@ export class ProfileComponent implements OnInit {
   async loadProfile() {
     try {
       const res = await this.dbService.getUser(this.user.userId);
+      const loggedUser = await this.authService.getUser();
+      if (loggedUser) this.loggedUserId = loggedUser.uid;
       if (res) {
         this.user = res;
         if (this.user.skills) {
+          this.userEditSkills = [];
           this.user.skills?.forEach(skill => this.userEditSkills.push(skill));
         }
       }
@@ -107,6 +112,12 @@ export class ProfileComponent implements OnInit {
     if (skillIdx !== -1) {
       this.userEditSkills.splice(skillIdx, 1);
     }
+  }
+
+  isUserAllowedToEdit() {
+    console.log(this.loggedUserId);
+    console.log(this.user.userId);
+    return (this.loggedUserId === this.user.userId);
   }
 
 }

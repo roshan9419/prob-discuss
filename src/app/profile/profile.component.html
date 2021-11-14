@@ -41,7 +41,7 @@
                     <div class="panel-heading">
                         <span class="panel-icon"><i class="fa fa-trophy"></i></span>
                         <span class="panel-title"> Skills</span>
-                        <div class="skill-edit-btn">
+                        <div *ngIf="isUserAllowedToEdit()" class="skill-edit-btn">
                             <a *ngIf="isEditSkillEnabled" class="btn btn-success btn-sm mx-1"
                                 (click)="saveUserSkills()">
                                 <span><i class="fa fa-save"></i></span>

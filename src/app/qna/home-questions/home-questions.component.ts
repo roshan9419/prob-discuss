@@ -12,6 +12,8 @@ export class HomeQuestionsComponent implements OnInit {
   isLoading: boolean = true
   questionsList: Question[] = []
 
+  tokens: Object =  { nextPageToken: '', previousPageToken: '' };
+
   constructor(private dbService: DBService) {}
 
   ngOnInit(): void {
