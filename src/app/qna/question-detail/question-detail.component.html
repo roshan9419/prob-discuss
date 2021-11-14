@@ -1,9 +1,5 @@
 <div *ngIf="isLoading else showQues">
-    <div class="d-flex justify-content-center">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
+    <app-loader></app-loader>
 </div>
 
 <ng-template #showQues>

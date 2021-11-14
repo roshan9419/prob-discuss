@@ -1,3 +1,44 @@
+/* E5233C */
+/* 5873FE */
+/* 343957 */
+
+nav {
+  background-color: #343957;
+}
+
+.active {
+  color: #E5233C !important;
+  /* background-color: #E5233C; */
+  /* border-radius: 5px; */
+}
+/* 
+.nav-item > a:hover {
+  color: aqua;
+} */
+
+.navbar-brand {
+  color: white;
+
+}
+.navbar-brand img {
+  filter: brightness(100);
+}
+
+.navbar-toggler {
+  color: #E5233C;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.nav-link {
+  color: white;
+}
+
 .usertag {
     display:inline-block;
 }
