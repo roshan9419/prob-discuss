@@ -77,12 +77,13 @@ export class DBService {
     return questions;
   }
 
-  async fetchRecentQuestions(limitSize: number, isForward: boolean = true, pageToken: string) {
+  async fetchRecentQuestions(limitSize: number, isForward: boolean, pageToken: string) {
     let query = this.db.collection<Question>('questions').ref.orderBy('askedDate', 'desc').limit(limitSize + 1);
 
     if (pageToken) {
       const docSnap = await this.db.collection('questions').ref.doc(pageToken).get();
       if (!docSnap.exists) return;
+      console.log('isForward==>', isForward);
       query = isForward
         ? query.startAt(docSnap).limit(limitSize + 1)
         : query.endBefore(docSnap).limitToLast(limitSize + 1);

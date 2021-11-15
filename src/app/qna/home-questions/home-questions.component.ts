@@ -25,36 +25,34 @@ export class HomeQuestionsComponent implements OnInit {
         this.loadRecentQuestions(params.pageToken, params.f);
       }
     );
-    console.log('Here');
   }
 
-  async loadRecentQuestions(pageToken: string, forward: boolean | undefined) {
+  async loadRecentQuestions(pageToken: string, forward: boolean | null | undefined) {
     try {
 
       this.nextPageToken = null;
       this.prevPageToken = null;
 
-      if (!forward) forward = true;
+      if (forward === undefined || forward === null) forward = true;
       const response = await this.dbService.fetchRecentQuestions(5, forward, pageToken);
       if (!response) {
         this.route.navigateByUrl('404');
         return;
       }
 
-      console.log(response);
-
       this.nextPageToken = response.nextPageToken;
       this.prevPageToken = response.prevPageToken;
-      this.questionsList = [];
-      response.resultList.forEach(quesItem => this.questionsList.push(quesItem));
-      if (response.resultList.length === 0) {
-        console.log("No data available");
-      }
-
+      this.questionsList = response.resultList;
       this.isLoading = false;
     } catch (e) {
       console.log(e);
     }
+  }
+
+  onPageBtnTap(isNext: boolean) {
+    this.isLoading = true;
+    if (isNext) this.loadRecentQuestions(this.nextPageToken!, true);
+    else this.loadRecentQuestions(this.prevPageToken!, false);
   }
 
 }

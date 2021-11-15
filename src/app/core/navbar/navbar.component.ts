@@ -37,14 +37,10 @@ export class NavbarComponent implements OnInit {
 
   async logout() {
     try {
-      await this.authService.signOut(this.afterSignout);
+      await this.authService.signOut();
     } catch (e) {
       console.log(e);
     }
-  }
-
-  afterSignout() {
-    alert("You're logged out");
   }
 
   async viewProfile() {

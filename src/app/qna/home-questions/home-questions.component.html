@@ -16,6 +16,6 @@
 </ng-template>
 
 <div class="container" *ngIf="!isLoading;">
-    <button id="next-btn" *ngIf="nextPageToken;" [routerLink]="['/']" [queryParams]="{pageToken: nextPageToken}" class="btn btn-dark">Next Page  <i class="fa fa-chevron-right"></i></button>
-    <button id="prev-btn" *ngIf="prevPageToken;" [routerLink]="['/']" [queryParams]="{pageToken: prevPageToken, f: false}" class="btn btn-light mx-3"><i class="fa fa-chevron-left"></i>  Previous Page</button>
+    <a id="next-btn" *ngIf="nextPageToken;" (click)="onPageBtnTap(true)" class="btn btn-dark">Next Page  <i class="fa fa-chevron-right"></i></a>
+    <a id="prev-btn" *ngIf="prevPageToken;" (click)="onPageBtnTap(false)" class="btn btn-light mx-3"><i class="fa fa-chevron-left"></i>  Previous Page</a>
 </div>
