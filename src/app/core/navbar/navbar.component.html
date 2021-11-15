@@ -25,22 +25,16 @@
             <div *ngIf="isLoggedIn; else showLogin">
                 <div class="navbar-nav nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">Logged In
-                        <!-- <img [ngStyle]="{'border-radius': '50%'}" src={{auth.photoURL}} width="30" height="30"
-                            onerror="this.src='https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png;'"
-                            alt="..."> -->
-                            
-                        <!-- {{ user.email != null ? user.email.substring(0, user.email.indexOf('@')) : user.displayName }} -->
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img [ngStyle]="{'border-radius': '50%'}" src={{userProfilePhoto}} width="30" height="30"
+                            onerror="this.src='https://firebasestorage.googleapis.com/v0/b/probdiscuss-qna.appspot.com/o/users%2Fdefault?alt=media'"
+                            alt="...">
+                            <span id="profileName">{{userProfileName}}</span>
                     </a>
-                    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button> -->
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <li><a style="cursor: pointer;" class="dropdown-item" (click)="viewProfile()">Your Profile</a>
                         </li>
                         <li><a style="cursor: pointer;" class="dropdown-item">Help & Support</a></li>
-                        <li><a style="cursor: pointer;" class="dropdown-item">Your Answers</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

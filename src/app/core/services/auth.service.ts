@@ -9,7 +9,7 @@ import { DBService } from './db.service';
 })
 export class AuthService {
 
-  authState: firebase.User | null = null;
+  private authState: firebase.User | null = null;
 
   constructor(private afu: AngularFireAuth, private dbService: DBService) {
     console.log("AuthService Initialized");

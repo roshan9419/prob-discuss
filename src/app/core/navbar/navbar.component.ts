@@ -18,6 +18,14 @@ export class NavbarComponent implements OnInit {
     return this.authService.isAuthValidated;
   }
 
+  get userProfilePhoto() {
+    return this.authService.currentUser?.photoURL;
+  }
+
+  get userProfileName() {
+    return this.authService.userName;
+  }
+
   async login() {
     try {
       const user = await this.authService.googleLoginIn();
