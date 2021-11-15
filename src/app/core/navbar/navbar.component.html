@@ -1,8 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" routerLink='/'>
-            <img src="../../../assets/images/logo.png" width="30"
-                height="30" class="d-inline-block align-top" alt="">
+            <img src="../../../assets/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
             ProbDiscuss
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -12,26 +11,34 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" aria-current="page" routerLink='/'>Home</a>
+                    <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
+                        aria-current="page" routerLink='/'>Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" aria-current="page" routerLink='/ask-question'>Ask Question</a>
+                    <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
+                        aria-current="page" routerLink='/ask-question'>Ask Question</a>
                 </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
-            <div *ngIf="getUser() | async as user; else showLogin">
+            <div *ngIf="isLoggedIn; else showLogin">
                 <div class="navbar-nav nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img [ngStyle]="{'border-radius': '50%'}" src={{user.photoURL}} width="30" height="30"
+                        data-bs-toggle="dropdown" aria-expanded="false">Logged In
+                        <!-- <img [ngStyle]="{'border-radius': '50%'}" src={{auth.photoURL}} width="30" height="30"
                             onerror="this.src='https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png;'"
-                            alt="...">
-                        {{ user.email != null ? user.email.substring(0, user.email.indexOf('@')) : user.displayName }}
+                            alt="..."> -->
+                            
+                        <!-- {{ user.email != null ? user.email.substring(0, user.email.indexOf('@')) : user.displayName }} -->
                     </a>
+                    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button> -->
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a style="cursor: pointer;" class="dropdown-item" (click)="viewProfile()">Your Profile</a></li>
+                        <li><a style="cursor: pointer;" class="dropdown-item" (click)="viewProfile()">Your Profile</a>
+                        </li>
                         <li><a style="cursor: pointer;" class="dropdown-item">Help & Support</a></li>
                         <li><a style="cursor: pointer;" class="dropdown-item">Your Answers</a></li>
                         <li>

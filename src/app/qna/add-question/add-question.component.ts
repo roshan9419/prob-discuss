@@ -31,13 +31,12 @@ export class AddQuestionComponent implements OnInit {
 
   async onSubmit() {
     try {
-      const user = await this.authService.auth.currentUser;
-      if (!user) {
+      if (!this.authService.isAuthValidated) {
         this.publishedStatus = "You're not logged in";
         return;
       }
-      this.question.userId = user!.uid;
-      this.question.username = user!.displayName!;
+      this.question.userId = this.authService.userId!;
+      this.question.username = this.authService.userName!;
       this.question.askedDate = new Date();
       if (this.tags.length !== 0) {
         this.question.tags = this.tags.split(',');

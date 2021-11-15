@@ -18,11 +18,11 @@ export class AuthService {
     }))
   }
 
-  get currentUserId(): string | null {
+  get userId(): string | null {
     return (this.authState !== null) ? this.authState.uid : null;
   }
 
-  get currentUserName(): string | null {
+  get userName(): string | null {
     return (this.authState !== null) ? this.authState.displayName : null;
   }
 
@@ -57,7 +57,7 @@ export class AuthService {
     return response.user;
   }
 
-  async signOut(next: Function) {
+  async signOut(next?: Function) {
     await this.afu.signOut();
     if (next) next();
   }

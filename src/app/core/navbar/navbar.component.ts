@@ -14,8 +14,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getUser() {
-    return this.authService.auth.user;
+  get isLoggedIn() {
+    return this.authService.isAuthValidated;
   }
 
   async login() {
@@ -29,17 +29,20 @@ export class NavbarComponent implements OnInit {
 
   async logout() {
     try {
-      await this.authService.signOut();
-      // alert("Logged Out");
+      await this.authService.signOut(this.afterSignout);
     } catch (e) {
       console.log(e);
     }
   }
 
+  afterSignout() {
+    alert("You're logged out");
+  }
+
   async viewProfile() {
-    const user = await this.authService.auth.currentUser;
-    if (!user) return;
-    this.router.navigateByUrl(`/profile/${user.uid}`);
+    if (this.authService.isAuthValidated) {
+      this.router.navigateByUrl(`/profile/${this.authService.userId}`);
+    }
   }
 
 }

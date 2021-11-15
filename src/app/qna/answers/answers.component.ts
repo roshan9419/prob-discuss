@@ -17,7 +17,6 @@ export class AnswersComponent implements OnInit {
 
   answers: Answer[] = [];
   publishedStatus: string = '';
-  currentUserId: string = '';
 
   isLoading: boolean = true;
   isUserAllowedToAns: boolean = false;
@@ -34,13 +33,10 @@ export class AnswersComponent implements OnInit {
     try {
       this.answers = await this.dbService.fetchAnswersByQuestionId(this.question.questionId, AnswerType.MOST_RECENT);
       this.isLoading = false;
-      console.log(this.answers);
-      const user = await this.authService.auth.currentUser;
-      if (!user) {
+      if (!this.authService.isAuthValidated) {
         this.isUserAllowedToAns = false;
       } else {
-        this.currentUserId = user.uid;
-        this.isUserAllowedToAns = user.uid !== this.question.userId;
+        this.isUserAllowedToAns = this.authService.userId !== this.question.userId;
       }
     } catch (e) {
       console.log(e);
@@ -50,15 +46,14 @@ export class AnswersComponent implements OnInit {
   async addAnswer() {
     if (!this.answer.content) return;
     try {
-      const user = await this.authService.auth.currentUser;
-      if (!user) {
+      if (!this.authService.isAuthValidated) {
         this.publishedStatus = "You're not logged in";
         return;
       }
       this.answer.questionId = this.question.questionId;
       this.answer.questionTitle = this.question.title;
-      this.answer.userId = user!.uid;
-      this.answer.username = user!.displayName!;
+      this.answer.userId = this.authService.userId!;
+      this.answer.username = this.authService.userName!;
       this.answer.answeredDate = new Date();
 
       await this.dbService.addAnswer(this.answer);
@@ -75,5 +70,9 @@ export class AnswersComponent implements OnInit {
   onEditorChange(event: ContentChange) {
     this.answer.content = event.html || '';
     if (event.text.trim().length === 0) this.answer.content = '';
+  }
+
+  currentUserId() {
+    return this.authService.userId;
   }
 }

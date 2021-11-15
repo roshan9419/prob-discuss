@@ -16,8 +16,8 @@ export class ProfileComponent implements OnInit {
   activityTabs: string[] = ['Questions', 'Answers'];
   selectedActTab: string = this.activityTabs[0];
 
-  loggedUserId: string = ''
-  user: User = new User();
+  // loggedUserId: string = ''
+  viewUserObj: User = new User();
 
   questionsList: Question[] = [];
   answersList: Answer[] = [];
@@ -35,27 +35,23 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.activatedroute.params.subscribe(
       params => {
-        this.user.userId = params.userId;
-        console.log(this.user.userId);
-        if (!this.user.userId) {
+        if (!params.userId) {
           console.log("Url not found");
           this.route.navigateByUrl('404');
         }
-        this.loadProfile();
+        this.loadProfile(params.userId);
       }
     );
   }
 
-  async loadProfile() {
+  async loadProfile(userId: string) {
     try {
-      const res = await this.dbService.getUser(this.user.userId);
-      const loggedUser = await this.authService.getUser();
-      if (loggedUser) this.loggedUserId = loggedUser.uid;
+      const res = await this.dbService.getUser(userId);
       if (res) {
-        this.user = res;
-        if (this.user.skills) {
+        this.viewUserObj = res;
+        if (this.viewUserObj.skills) {
           this.userEditSkills = [];
-          this.user.skills?.forEach(skill => this.userEditSkills.push(skill));
+          this.viewUserObj.skills?.forEach(skill => this.userEditSkills.push(skill));
         }
       }
       await this.loadUserQuestions();
@@ -67,11 +63,11 @@ export class ProfileComponent implements OnInit {
   }
 
   async loadUserQuestions() {
-    this.questionsList = await this.dbService.fetchUserQuestions(this.user.userId);
+    this.questionsList = await this.dbService.fetchUserQuestions(this.viewUserObj.userId);
   }
 
   async loadUserAnswers() {
-    this.answersList = await this.dbService.fetchUserAnswers(this.user.userId);
+    this.answersList = await this.dbService.fetchUserAnswers(this.viewUserObj.userId);
   }
 
   onViewQuestion(questionId: string) {
@@ -81,18 +77,17 @@ export class ProfileComponent implements OnInit {
   toggleEditSkillBtn() {
     this.isEditSkillEnabled = !this.isEditSkillEnabled;
     if (!this.isEditSkillEnabled) {
-      console.log(this.user.skills);
-      if (this.user.skills) {
+      if (this.viewUserObj.skills) {
         this.userEditSkills = [];
-        this.user.skills?.forEach(skill => this.userEditSkills.push(skill));
+        this.viewUserObj.skills?.forEach(skill => this.userEditSkills.push(skill));
       }
       console.log("Cancel Tapped");
     }
   }
 
   async saveUserSkills() {
-    this.user.skills = this.userEditSkills;
-    await this.dbService.updateUser(this.user);
+    this.viewUserObj.skills = this.userEditSkills;
+    await this.dbService.updateUser(this.viewUserObj);
     this.isEditSkillEnabled = false;
   }
 
@@ -115,9 +110,7 @@ export class ProfileComponent implements OnInit {
   }
 
   isUserAllowedToEdit() {
-    console.log(this.loggedUserId);
-    console.log(this.user.userId);
-    return (this.loggedUserId === this.user.userId);
+    return (this.authService.userId === this.viewUserObj.userId);
   }
 
 }
