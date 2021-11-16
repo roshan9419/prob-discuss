@@ -29,19 +29,27 @@
                         <img [ngStyle]="{'border-radius': '50%'}" src={{userProfilePhoto}} width="30" height="30"
                             onerror="this.src='https://firebasestorage.googleapis.com/v0/b/probdiscuss-qna.appspot.com/o/users%2Fdefault?alt=media'"
                             alt="...">
-                            <span id="profileName">{{userProfileName}}</span>
+                        <span id="profileName">{{userProfileName}}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <li><a style="cursor: pointer;" class="dropdown-item" (click)="viewProfile()">Your Profile</a>
+                        <li><a style="cursor: pointer;" class="dropdown-item" (click)="viewProfile()">Your
+                                Profile</a>
                         </li>
-                        <li><a style="cursor: pointer;" class="dropdown-item">Help & Support</a></li>
+                        <li><a style="cursor: pointer;" class="dropdown-item" href="mailto:{{ contactEmail }}">Help & Support</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a style="cursor: pointer;" class="dropdown-item" (click)="logout()">Log Out</a></li>
+                        <li><a style="cursor: pointer;" class="dropdown-item" (click)="logout()">Log Out<i class="fa fa-sign-out logout-icon"></i></a></li>
                     </ul>
                 </div>
             </div>
+
+            <!-- <div class="spinner-container" id="loader" *ngIf="isLoading">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div> -->
+
             <ng-template #showLogin>
                 <button class="btn btn-primary btn-login" (click)="login()">Login with Google</button>
             </ng-template>
