@@ -3,14 +3,29 @@
 </div>
 
 <ng-template #showAns>
-    <h4>{{answers.length === 0 ? 'No answers yet' : answers.length === 1 ? '1 answer' : (answers.length + ' answers')}}</h4>
-
-    <div class="ans-container" *ngFor="let ans of answers">
-        <div *ngIf="ans.userId === currentUserId()">
-            <b>Your Answer</b>
+    <div class="ans-filter">
+        <div class="ans-count">{{answers.length === 0 ? 'No answers yet' : answers.length === 1 ? '1 Answer' :
+            (answers.length + ' Answers')}}
         </div>
-        <quill-view-html [content]="ans.content" theme="snow"></quill-view-html>
-        <div>
+        <div class="filter-btns">
+            <a class="btn btn-recent">Recent</a>
+            <a class="btn btn-oldest">Oldest</a>
+            <a class="btn btn-votes filter-active">Votes</a>
+        </div>
+    </div>
+    <div class="container ans-container" *ngFor="let ans of answers">
+        <div class="ans-left">
+            <div class="upvote-btn"></div>
+            <div class="upvote-value">12</div>
+            <div class="accepted-ans"><i class="fa fa-check"></i></div>
+        </div>
+
+        <div class="ans-body">
+            <!-- <div *ngIf="ans.userId === currentUserId()">
+                <b>Your Answer</b>
+            </div> -->
+
+            <quill-view-html [ngStyle]="editorStyle" [content]="ans.content" theme="snow"></quill-view-html>
         </div>
     </div>
 
@@ -19,7 +34,8 @@
             <h5>Your Answer</h5>
             <form (ngSubmit)="addAnswer()">
                 <div class="form-group my-3">
-                    <quill-editor [styles]="{'min-height': '120px'}" [maxLength]="1000" id="editor" (onContentChanged)="onEditorChange($event)"></quill-editor>
+                    <quill-editor [styles]="{'min-height': '120px'}" [maxLength]="1000" id="editor"
+                        (onContentChanged)="onEditorChange($event)"></quill-editor>
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!answer.content">Post your
                     Answer</button>

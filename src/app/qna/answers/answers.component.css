@@ -1,5 +1,72 @@
+.ans-filter {
+    height: fit-content;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.ans-count {
+    font-size: 20px;
+}
+
+.filter-btns {
+    border: 1px solid rgb(129, 129, 129);
+    border-radius: 3px;
+    margin: 0 0 0 auto;
+}
+
+.filter-btns a {
+    border-radius: 0;
+    font-size: 14px;
+}
+
+.filter-btns a:hover {
+    background-color: #adadad7c;
+}
+
+.filter-active {
+    background-color: #9e9d9d7c;
+}
+
+.btn-recent, .btn-oldest {
+    border-right: 1px solid rgb(129, 129, 129);
+}
+
 .ans-container {
-    padding: 10px;
-    border: 1px solid black;
-    
+    /* padding: 10px; */
+    /* border: 1px solid black; */
+    display: inline-flex;
+}
+
+.ans-left {
+    margin-top: 12px;
+    padding: 0;
+}
+
+.upvote-btn {
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid rgba(160, 157, 157, 0.767);
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.upvote-value {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 20px;
+    color: #5e5c5c;
+    padding: 5px;
+}
+
+.ans-body {
+    /* background-color: aqua; */
+    padding: 0;
+}
+
+.accepted-ans {
+    cursor: pointer;
+    font-size: 32px;
+    color: rgb(14, 145, 14);
 }

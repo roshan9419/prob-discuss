@@ -13,6 +13,10 @@ import { DBService } from 'src/app/core/services/db.service';
 })
 export class AnswersComponent implements OnInit {
 
+  editorStyle = {
+    backgroundColor: 'blue'
+  }
+
   @Input() question!: Question;
 
   answers: Answer[] = [];
