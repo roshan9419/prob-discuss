@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ContentChange } from 'ngx-quill';
 import { Question } from 'src/app/core/models/question';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
 import { StorageService } from 'src/app/core/services/storage.service';
+
+declare const $: any
 
 @Component({
   selector: 'app-add-question',
@@ -15,10 +17,30 @@ export class AddQuestionComponent implements OnInit {
   question: Question;
   publishedStatus: string = '';
   files: File[] = [];
-  tags: string = '';
+  tags: string[] = [];
+  inputTag: string = '';
 
-  constructor(private dbService: DBService, private authService: AuthService, private storageService: StorageService) {
+  constructor(private elementRef: ElementRef, private dbService: DBService, private authService: AuthService, private storageService: StorageService) {
     this.question = new Question();
+  }
+
+  ngAfterViewInit(): void {
+    this.elementRef.nativeElement.querySelector('#tags')
+      .addEventListener('keydown', (e: KeyboardEvent) => {
+        const validKey = e.key === ' ' || e.key === 'Enter';
+        if (validKey) $(this)[0].addSkill();
+        
+        if (!(/^[a-zA-Z()]+$/.test(e.key))) {
+          e.preventDefault();
+        }
+      });
+  }
+
+  addSkill() {
+    if (!this.tags.includes(this.inputTag) && this.tags.length < 5) {
+      this.tags.push(this.inputTag.toLowerCase());
+    }
+    this.inputTag = "";
   }
 
   ngOnInit(): void {
@@ -38,9 +60,7 @@ export class AddQuestionComponent implements OnInit {
       this.question.userId = this.authService.userId!;
       this.question.username = this.authService.userName!;
       this.question.askedDate = new Date();
-      if (this.tags.length !== 0) {
-        this.question.tags = this.tags.split(',');
-      }
+      if (this.tags.length !== 0) this.question.tags = this.tags;
 
       const questionId: string = await this.dbService.addQuestion(this.question);
       if (this.files.length !== 0) {
@@ -97,10 +117,15 @@ export class AddQuestionComponent implements OnInit {
   clearFields() {
     this.question.title = '';
     this.question.content = '';
-    this.tags = '';
+    this.tags = [];
+    this.inputTag = '';
     document.getElementsByClassName("ql-editor")[0].innerHTML = "";
     (<HTMLInputElement>document.getElementById("files")).value = '';
     this.question = new Question();
+  }
+
+  deleteLastTag() {
+    this.tags.splice(-1);
   }
 
 }

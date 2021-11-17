@@ -2,7 +2,7 @@
     <h4>Ask a Question</h4>
     <hr>
 
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
         <div class="form-group mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" placeholder="e.g. How to resolve this issue...?" class="form-control" name="title"
@@ -17,8 +17,13 @@
             </div>
         </div>
         <div class="form-group mb-3">
-            <label for="tags" class="form-label">Tags (Separated by ,)</label>
-            <input type="text" class="form-control" name="tags" id="tags" [(ngModel)]="tags">
+            <label for="tags" class="form-label">Tags</label>
+            <div class="tags-box mb-1" *ngIf="tags.length !== 0">
+                <app-tags [tags]="tags"></app-tags>
+                <div class="del-last-tag" (click)="deleteLastTag()"><i class="fa fa-close"></i></div>
+            </div>
+            <input type="text" class="form-control tag-input" name="tags" id="tags" placeholder="e.g. javascript, flutter" [(ngModel)]="inputTag">
+            <small class="info">(Provide upto 5 specific tags related to it)</small>
         </div>
         <div class="form-group mb-3">
             <label for="files" class="form-label">Add images describing your problem</label>
@@ -27,7 +32,7 @@
             <small class="info">(Choose upto 5 images and each must be less then 1mb)</small>
         </div>
         <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!fieldsValid()">Publish Question</button>
-        <button type="reset" class="btn btn-danger btn-sm mx-2">Clear</button>
+        <button type="reset" class="btn btn-danger btn-sm mx-2" (click)="clearFields()">Clear</button>
         <small *ngIf="!isUserLoggedIn()">(You're not logged in)</small>
     </form>
     <div>

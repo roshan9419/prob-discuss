@@ -13,3 +13,19 @@ form {
 .info {
     font-size: 12px;
 }
+
+input:focus,
+input:active {
+    outline: none;
+    box-shadow: none;
+}
+
+.tags-box {
+    display: flex;
+    width: fit-content;
+}
+
+.del-last-tag {
+    cursor: pointer;
+    margin-left: 10px;
+}
