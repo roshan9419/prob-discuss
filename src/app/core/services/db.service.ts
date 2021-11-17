@@ -134,11 +134,13 @@ export class DBService {
       .where('questionId', '==', questionId)
       .limit(limit);
 
-    if (answerType == AnswerType.MOST_VOTED) {
-      query = query.orderBy('totalVotes', 'desc');
+    if (answerType === AnswerType.MOST_VOTED) {
+      query = query.orderBy('totalVotes', 'desc').orderBy('answeredDate', 'desc');
+    } else if (answerType === AnswerType.OLDEST) {
+      query = query.orderBy('answeredDate', 'asc');
+    } else {
+      query = query.orderBy('answeredDate', 'desc');
     }
-    // filter by latest
-    query = query.orderBy('answeredDate', 'desc');
 
     if (lastFetchedId) {
       query = query.startAfter(lastFetchedId);

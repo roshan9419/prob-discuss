@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContentChange } from 'ngx-quill';
 import { Answer } from 'src/app/core/models/answer';
 import { AnswerType } from 'src/app/core/models/enums/answerType';
@@ -22,6 +23,7 @@ export class AnswersComponent implements OnInit {
 
   answers: Answer[] = [];
   usersMap = new Map<string, User>();
+  activeAnswerType: AnswerType = AnswerType.RECENT
 
   publishedStatus: string = '';
 
@@ -30,16 +32,27 @@ export class AnswersComponent implements OnInit {
 
   answer: Answer = new Answer();
 
-  constructor(private dbService: DBService, private authService: AuthService) { }
+  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.fetchAnswers();
+    this.activatedRoute.queryParams.subscribe(
+      params => {
+        console.log(params);
+        let sortType = params.sort;
+        if (!sortType || sortType === 'recent') sortType = AnswerType.RECENT;
+        else if (sortType === 'votes') sortType = AnswerType.MOST_VOTED;
+        else if (sortType === 'oldest') sortType = AnswerType.OLDEST;
+        else this.router.navigateByUrl('400');
+        this.fetchAnswers(sortType);
+      }
+    );
   }
 
-  async fetchAnswers() {
+  async fetchAnswers(answerType: AnswerType) {
     try {
-      this.answers = await this.dbService.fetchAnswersByQuestionId(this.question.questionId, AnswerType.MOST_RECENT);
-      
+      this.activeAnswerType = answerType;
+      this.answers = await this.dbService.fetchAnswersByQuestionId(this.question.questionId, this.activeAnswerType);
+
       const userIds: string[] = [];
       this.answers.forEach(item => userIds.push(item.userId));
 
@@ -89,5 +102,12 @@ export class AnswersComponent implements OnInit {
 
   currentUserId() {
     return this.authService.userId;
+  }
+
+  selectedTab(type: string) {
+    if (type === 'recent' && this.activeAnswerType === AnswerType.RECENT) return true;
+    if (type === 'oldest' && this.activeAnswerType === AnswerType.OLDEST) return true;
+    if (type === 'votes' && this.activeAnswerType === AnswerType.MOST_VOTED) return true;
+    return false;
   }
 }

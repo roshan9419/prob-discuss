@@ -8,16 +8,16 @@
             (answers.length + ' Answers')}}
         </div>
         <div class="filter-btns">
-            <a class="btn btn-recent">Recent</a>
-            <a class="btn btn-oldest">Oldest</a>
-            <a class="btn btn-votes filter-active">Votes</a>
+            <a class="btn btn-recent" [ngClass]="{'filter-active': selectedTab('recent') }" [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'recent'}">Recent</a>
+            <a class="btn btn-oldest" [ngClass]="{'filter-active': selectedTab('oldest') }" [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'oldest'}">Oldest</a>
+            <a class="btn btn-votes" [ngClass]="{'filter-active': selectedTab('votes') }" [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'votes'}">Votes</a>
         </div>
     </div>
     <div class="container" *ngFor="let ans of answers">
         <div class="ans-container">
             <div class="ans-left">
                 <div class="upvote-btn"></div>
-                <div class="upvote-value">12</div>
+                <div class="upvote-value">{{ans.upvotes?.length || 0}}</div>
                 <div class="accepted-ans"><i class="fa fa-check"></i></div>
             </div>
     

@@ -6,7 +6,7 @@ export class Answer {
     username!: string
     content!: string
     upvotes?: string[]
-    totalVotes?: number
+    totalVotes?: number = 0
     answeredDate!: Date
 
     toJson() {

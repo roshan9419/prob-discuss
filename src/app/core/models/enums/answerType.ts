@@ -1,3 +1,3 @@
 export enum AnswerType {
-    MOST_RECENT, MOST_VOTED
+    RECENT, OLDEST, MOST_VOTED
 }
