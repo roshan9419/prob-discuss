@@ -85,7 +85,7 @@ export class AnswersComponent implements OnInit {
       this.answer.answeredDate = new Date();
 
       await this.dbService.addAnswer(this.answer);
-      document.getElementsByClassName("ql-editor")[0].innerHTML = "";
+      document.getElementsByClassName("editor")[0].innerHTML = "";
       this.answer = new Answer();
       this.publishedStatus = 'Answer published successfuly';
       setTimeout(() => this.publishedStatus = '', 2000);

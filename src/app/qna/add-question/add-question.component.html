@@ -28,6 +28,7 @@
         </div>
         <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!fieldsValid()">Publish Question</button>
         <button type="reset" class="btn btn-danger btn-sm mx-2">Clear</button>
+        <small *ngIf="!isUserLoggedIn()">(You're not logged in)</small>
     </form>
     <div>
         {{ publishedStatus }}

@@ -7,7 +7,7 @@
         <div class="ans-count">{{answers.length === 0 ? 'No answers yet' : answers.length === 1 ? '1 Answer' :
             (answers.length + ' Answers')}}
         </div>
-        <div class="filter-btns">
+        <div class="filter-btns" *ngIf="answers.length !== 0">
             <a class="btn btn-recent" [ngClass]="{'filter-active': selectedTab('recent') }" [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'recent'}">Recent</a>
             <a class="btn btn-oldest" [ngClass]="{'filter-active': selectedTab('oldest') }" [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'oldest'}">Oldest</a>
             <a class="btn btn-votes" [ngClass]="{'filter-active': selectedTab('votes') }" [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'votes'}">Votes</a>
@@ -38,7 +38,7 @@
             <h5>Your Answer</h5>
             <form (ngSubmit)="addAnswer()">
                 <div class="form-group my-3">
-                    <quill-editor [styles]="{'min-height': '120px'}" [maxLength]="1000" id="editor"
+                    <quill-editor [styles]="{'min-height': '120px'}" [maxLength]="1000" class="editor"
                         (onContentChanged)="onEditorChange($event)"></quill-editor>
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!answer.content">Post your

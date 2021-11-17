@@ -110,7 +110,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  isUserAllowedToEdit() {
+  isUserOwnProfile() {
     return (this.authService.userId === this.viewUserObj.userId);
   }
 

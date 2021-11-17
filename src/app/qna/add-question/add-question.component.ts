@@ -65,7 +65,11 @@ export class AddQuestionComponent implements OnInit {
   }
 
   fieldsValid() {
-    return this.question.title && this.question.content;
+    return this.question.title && this.question.content && this.authService.isAuthValidated;
+  }
+
+  isUserLoggedIn() {
+    return this.authService.isAuthValidated;
   }
 
   onFilesChange(event: Event) {
