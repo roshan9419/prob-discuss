@@ -166,4 +166,22 @@ export class DBService {
     });
     return answers;
   }
+
+  async getUsers(userIds: string[]) {
+    const usersMap = new Map<string, User>();
+    const batchSize = 10;
+    for (let i = 0; i < userIds.length; i += batchSize) {
+      const batchIds = userIds.slice(i, i + batchSize > userIds.length ? userIds.length : i + batchSize);
+
+      const constraints = this.db
+        .collection<User>('users').ref
+        .where('userId', 'in', batchIds);
+
+      const querySnapshot = await constraints.get();
+      querySnapshot.docs.forEach(element => {
+        usersMap.set(element.id, element.data());
+      });
+    }
+    return usersMap;
+  }
 }

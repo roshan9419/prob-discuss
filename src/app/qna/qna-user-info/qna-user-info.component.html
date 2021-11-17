@@ -1,7 +1,13 @@
-<div class="card" style="max-width: 18rem;">
-    <div class="card-body">
-        <h6 class="card-title">{{name}}</h6>
-        <p class="card-subtitle text-muted"><small class="text-muted">asked {{date | dateAgo}}</small></p>
-        <a [routerLink]="['/profile', userId ]" style="text-decoration: none; font-size: 12px;" class="card-link">View Profile</a>
+<div class="card-container">
+    <small class="time">{{(isQues ? 'asked ' : 'answered ') + (date | dateAgo)}}</small>
+    <div class="user-det">
+        <app-user-dp [borderRadius]="10"
+            [photoUrl]="imageUrl">
+        </app-user-dp>
+        <div class="right-part">
+            <div class="username">{{name}}</div>
+            <a [routerLink]="['/profile', userId ]">View
+                Profile</a>
+        </div>
     </div>
 </div>

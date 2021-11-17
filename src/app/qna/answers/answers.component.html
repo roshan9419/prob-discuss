@@ -13,20 +13,24 @@
             <a class="btn btn-votes filter-active">Votes</a>
         </div>
     </div>
-    <div class="container ans-container" *ngFor="let ans of answers">
-        <div class="ans-left">
-            <div class="upvote-btn"></div>
-            <div class="upvote-value">12</div>
-            <div class="accepted-ans"><i class="fa fa-check"></i></div>
+    <div class="container" *ngFor="let ans of answers">
+        <div class="ans-container">
+            <div class="ans-left">
+                <div class="upvote-btn"></div>
+                <div class="upvote-value">12</div>
+                <div class="accepted-ans"><i class="fa fa-check"></i></div>
+            </div>
+    
+            <div class="ans-body">
+                <!-- <div *ngIf="ans.userId === currentUserId()">
+                    <b>Your Answer</b>
+                </div> -->
+    
+                <quill-view-html [ngStyle]="editorStyle" [content]="ans.content" theme="snow"></quill-view-html>
+            </div>
         </div>
-
-        <div class="ans-body">
-            <!-- <div *ngIf="ans.userId === currentUserId()">
-                <b>Your Answer</b>
-            </div> -->
-
-            <quill-view-html [ngStyle]="editorStyle" [content]="ans.content" theme="snow"></quill-view-html>
-        </div>
+        <app-qna-user-info [imageUrl]="usersMap.get(ans.userId)?.photoUrl!" [name]="ans.username" [userId]="ans.userId" [isQues]="false"
+                [date]="ans.answeredDate"></app-qna-user-info>
     </div>
 
     <div *ngIf="isUserAllowedToAns" class="container m-3">

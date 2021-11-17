@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Answer } from 'src/app/core/models/answer';
 import { AnswerType } from 'src/app/core/models/enums/answerType';
 import { Question } from 'src/app/core/models/question';
+import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
 import { StorageService } from 'src/app/core/services/storage.service';
@@ -19,6 +20,7 @@ export class QuestionDetailComponent implements OnInit {
   answer: Answer;
   publishedStatus = ''
   answersList: Answer[] = []
+  user: User | undefined
 
   isLoading: boolean = true;
 
@@ -43,6 +45,7 @@ export class QuestionDetailComponent implements OnInit {
   async getQuestion() {
     try {
       this.question = await this.dbService.getQuestionById(this.questionId);
+      this.user = await this.dbService.getUser(this.question?.userId!);
       this.isLoading = false;
     } catch (e) {
       console.log(e);

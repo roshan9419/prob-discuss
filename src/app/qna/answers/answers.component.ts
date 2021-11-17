@@ -3,6 +3,7 @@ import { ContentChange } from 'ngx-quill';
 import { Answer } from 'src/app/core/models/answer';
 import { AnswerType } from 'src/app/core/models/enums/answerType';
 import { Question } from 'src/app/core/models/question';
+import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
 
@@ -20,6 +21,8 @@ export class AnswersComponent implements OnInit {
   @Input() question!: Question;
 
   answers: Answer[] = [];
+  usersMap = new Map<string, User>();
+
   publishedStatus: string = '';
 
   isLoading: boolean = true;
@@ -36,6 +39,14 @@ export class AnswersComponent implements OnInit {
   async fetchAnswers() {
     try {
       this.answers = await this.dbService.fetchAnswersByQuestionId(this.question.questionId, AnswerType.MOST_RECENT);
+      
+      const userIds: string[] = [];
+      this.answers.forEach(item => userIds.push(item.userId));
+
+      if (userIds.length !== 0) {
+        this.usersMap = await this.dbService.getUsers(userIds);
+      }
+
       this.isLoading = false;
       if (!this.authService.isAuthValidated) {
         this.isUserAllowedToAns = false;

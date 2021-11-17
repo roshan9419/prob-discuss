@@ -9,6 +9,7 @@ export class UserDpComponent implements OnInit {
 
   @Input() photoUrl: string | undefined | null = 'https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png';
   @Input() size: number = 30;
+  @Input() borderRadius: number = 50;
 
   constructor() { }
 
