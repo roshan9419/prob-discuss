@@ -52,6 +52,10 @@
     cursor: pointer;
 }
 
+.user-upvoted {
+    border-bottom: 15px solid rgba(48, 89, 223, 0.767);
+}
+
 .upvote-value {
     margin: 0 auto;
     text-align: center;

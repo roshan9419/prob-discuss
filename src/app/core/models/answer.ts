@@ -6,7 +6,7 @@ export class Answer {
     username!: string
     content!: string
     upvotes?: string[]
-    totalVotes?: number = 0
+    totalVotes: number = 0
     status!: string
     answeredDate!: Date
 

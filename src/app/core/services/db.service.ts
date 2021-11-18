@@ -191,4 +191,41 @@ export class DBService {
     }
     return usersMap;
   }
+
+  async addRemoveUpvote(answerId: string, userId: string, isAdd: boolean) {
+    try {
+      await this.db.firestore.runTransaction(async (t) => {
+        console.log("Transaction Started");
+        const ansDocSnap = await t.get(this.db.collection<Answer>('answers').doc(answerId).ref);
+        if (!ansDocSnap.exists) {
+          throw new Error("Answer not found");
+        }
+
+        const ans = ansDocSnap.data()!;
+        if (ans.upvotes === undefined) {
+          ans.upvotes = [];
+        }
+
+        // Checking if already added
+        if (ans.upvotes.includes(userId)) {
+          return;
+        }
+
+        if (isAdd) {
+          ans.upvotes.push(userId);
+          ans.totalVotes++;
+        } else {
+          const idx = ans.upvotes.indexOf(userId);
+          if (idx != -1) {
+            ans.upvotes.splice(idx, 1);
+            ans.totalVotes--;
+          }
+        }
+
+        t.update(ansDocSnap.ref, this.toJson(ans));
+      });
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
+  }
 }

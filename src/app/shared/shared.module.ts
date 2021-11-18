@@ -9,6 +9,7 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { RectPhotoNameComponent } from './components/rect-photo-name/rect-photo-name.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ConfirmComponent } from './dialogs/confirm/confirm.component';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ConfirmComponent } from './dialogs/confirm/confirm.component';
     DateAgoPipe,
     RectPhotoNameComponent,
     LoaderComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    SnackbarComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { ConfirmComponent } from './dialogs/confirm/confirm.component';
     RectPhotoNameComponent,
     LoaderComponent,
     ConfirmComponent,
+    SnackbarComponent,
     DateAgoPipe
   ]
 })

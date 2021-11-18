@@ -3,12 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ContentChange } from 'ngx-quill';
 import { Answer } from 'src/app/core/models/answer';
 import { AnswerType } from 'src/app/core/models/enums/answerType';
+import { SnackbarType } from 'src/app/core/models/enums/snackbarType';
 import { Status } from 'src/app/core/models/enums/status';
 import { Question } from 'src/app/core/models/question';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 @Component({
   selector: 'app-answers',
@@ -34,7 +36,7 @@ export class AnswersComponent implements OnInit {
 
   answer: Answer = new Answer();
 
-  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private dialogService: DialogService) { }
+  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private dialogService: DialogService, private snacbarService: SnackbarService) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(
@@ -114,7 +116,19 @@ export class AnswersComponent implements OnInit {
     return false;
   }
 
+  async onUpvoteBtnClick(ans: Answer) {
+    if (!this.authService.isAuthValidated) {
+      this.snacbarService.showSnackbar("You're not logged in", SnackbarType.DANGER);
+      return;
+    }
+
+    await this.dbService.addRemoveUpvote(ans.answerId, this.authService.userId!, true);
+  }
+
   markAcceptedAnswer(ans: Answer) {
+    console.log(ans);
+    console.log(ans.upvotes);
+    console.log(ans.totalVotes);
     let dialogMessage = "You're going to mark it as accepted answer. Does this answer resolved your problem?";
     let clear = false;
     if (this.question.acceptedAnsId && this.question.acceptedAnsId === ans.answerId) {

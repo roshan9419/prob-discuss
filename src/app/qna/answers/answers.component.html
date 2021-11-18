@@ -1,5 +1,7 @@
 <app-confirm></app-confirm>
 
+<app-snackbar></app-snackbar>
+
 <div *ngIf="isLoading else showAns">
     <p>Loading Answers...</p>
 </div>
@@ -21,7 +23,9 @@
     <div class="container" *ngFor="let ans of answers">
         <div class="ans-container">
             <div class="ans-left">
-                <div class="upvote-btn"></div>
+                <div class="upvote-btn"
+                    [ngClass]="{'user-upvoted': ans.upvotes !== undefined && currentUserId() != null && ans.upvotes.includes(currentUserId()!)}"
+                    (click)="onUpvoteBtnClick(ans)"></div>
                 <div class="upvote-value">{{ans.upvotes?.length || 0}}</div>
                 <div class="tick" [ngClass]="{'accepted-ans': question.acceptedAnsId === ans.answerId}"
                     *ngIf="question.userId === currentUserId(); else viewerTick" (click)="markAcceptedAnswer(ans)">
