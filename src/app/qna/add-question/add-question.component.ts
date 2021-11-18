@@ -1,9 +1,11 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { ContentChange } from 'ngx-quill';
+import { SnackbarType } from 'src/app/core/models/enums/snackbarType';
 import { Status } from 'src/app/core/models/enums/status';
 import { Question } from 'src/app/core/models/question';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 
 declare const $: any
@@ -21,7 +23,7 @@ export class AddQuestionComponent implements OnInit {
   tags: string[] = [];
   inputTag: string = '';
 
-  constructor(private elementRef: ElementRef, private dbService: DBService, private authService: AuthService, private storageService: StorageService) {
+  constructor(private elementRef: ElementRef, private dbService: DBService, private authService: AuthService, private storageService: StorageService, private snackbarService: SnackbarService) {
     this.question = new Question();
   }
 
@@ -55,7 +57,7 @@ export class AddQuestionComponent implements OnInit {
   async onSubmit() {
     try {
       if (!this.authService.isAuthValidated) {
-        this.publishedStatus = "You're not logged in";
+        this.snackbarService.showSnackbar("You're not logged in", SnackbarType.DANGER);
         return;
       }
       this.question.userId = this.authService.userId!;
@@ -66,23 +68,19 @@ export class AddQuestionComponent implements OnInit {
 
       const questionId: string = await this.dbService.addQuestion(this.question);
       if (this.files.length !== 0) {
-        this.publishedStatus = 'Uploading files...';
+        this.snackbarService.showSnackbar('Uploading files...', SnackbarType.INFO);
         try {
           this.question.imgPaths = await this.storageService.uploadFileForQuestion(questionId, this.files);
-          this.publishedStatus = 'Uploaded';
           await this.dbService.updateQuestion(this.question);
         } catch (e) {
-          console.log(e);
+          throw e;
         }
       }
 
       this.clearFields();
-      this.publishedStatus = 'Question published successfuly';
-
-      setTimeout(() => this.publishedStatus = '', 2000);
+      this.snackbarService.showSnackbar('Question published successfuly', SnackbarType.SUCCESS);
     } catch (e) {
-      console.log(e);
-      this.publishedStatus = 'Something went wrong, please try again.';
+      this.snackbarService.showSnackbar('Something went wrong, please try again.', SnackbarType.WARNING);
     }
   }
 

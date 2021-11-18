@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
       const user = await this.authService.googleLoginIn();
       // alert(`Welcome, ${user?.displayName}`);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 

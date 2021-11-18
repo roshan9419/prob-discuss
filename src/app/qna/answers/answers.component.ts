@@ -29,14 +29,12 @@ export class AnswersComponent implements OnInit {
   usersMap = new Map<string, User>();
   activeAnswerType: AnswerType = AnswerType.RECENT
 
-  publishedStatus: string = '';
-
   isLoading: boolean = true;
   isUserAllowedToAns: boolean = false;
 
   answer: Answer = new Answer();
 
-  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private dialogService: DialogService, private snacbarService: SnackbarService) { }
+  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private dialogService: DialogService, private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(
@@ -79,7 +77,7 @@ export class AnswersComponent implements OnInit {
     if (!this.answer.content) return;
     try {
       if (!this.authService.isAuthValidated) {
-        this.publishedStatus = "You're not logged in";
+        this.snackbarService.showSnackbar("You're not logged in", SnackbarType.DANGER);
         return;
       }
       this.answer.questionId = this.question.questionId;
@@ -92,11 +90,9 @@ export class AnswersComponent implements OnInit {
       await this.dbService.addAnswer(this.answer);
       document.getElementsByClassName("editor")[0].innerHTML = "";
       this.answer = new Answer();
-      this.publishedStatus = 'Answer published successfuly';
-      setTimeout(() => this.publishedStatus = '', 2000);
+      this.snackbarService.showSnackbar("Answer published successfuly", SnackbarType.SUCCESS);
     } catch (e) {
-      console.log(e);
-      this.publishedStatus = 'Something went wrong, please try again.';
+      this.snackbarService.showSnackbar('Something went wrong, please try again.', SnackbarType.WARNING);
     }
   }
 
@@ -118,7 +114,7 @@ export class AnswersComponent implements OnInit {
 
   async onUpvoteBtnClick(ans: Answer) {
     if (!this.authService.isAuthValidated) {
-      this.snacbarService.showSnackbar("You're not logged in", SnackbarType.DANGER);
+      this.snackbarService.showSnackbar("You're not logged in", SnackbarType.DANGER);
       return;
     }
 

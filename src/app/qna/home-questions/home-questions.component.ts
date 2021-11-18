@@ -34,7 +34,7 @@ export class HomeQuestionsComponent implements OnInit {
       this.prevPageToken = null;
 
       if (forward === undefined || forward === null) forward = true;
-      const response = await this.dbService.fetchRecentQuestions(5, forward, pageToken);
+      const response = await this.dbService.fetchRecentQuestions(10, forward, pageToken);
       if (!response) {
         throw new Error("Something went wrong");
       }
