@@ -11,7 +11,7 @@ import { Status } from '../models/enums/status';
 })
 export class DBService {
 
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore) { }
 
   toJson(data: Object) {
     return Object.assign({}, data);
@@ -192,10 +192,10 @@ export class DBService {
     return usersMap;
   }
 
-  async addRemoveUpvote(answerId: string, userId: string, isAdd: boolean) {
+  async addRemoveUpvote(answerId: string, userId: string, isAdd: boolean): Promise<Answer | null> {
+    let updatedAns: Answer | null = null;
     try {
       await this.db.firestore.runTransaction(async (t) => {
-        console.log("Transaction Started");
         const ansDocSnap = await t.get(this.db.collection<Answer>('answers').doc(answerId).ref);
         if (!ansDocSnap.exists) {
           throw new Error("Answer not found");
@@ -206,9 +206,10 @@ export class DBService {
           ans.upvotes = [];
         }
 
-        // Checking if already added
         if (ans.upvotes.includes(userId)) {
-          return;
+          if (isAdd) throw new Error("Already added your vote");
+        } else {
+          if (!isAdd) throw new Error("You have not upvoted this answer");
         }
 
         if (isAdd) {
@@ -223,9 +224,11 @@ export class DBService {
         }
 
         t.update(ansDocSnap.ref, this.toJson(ans));
+        updatedAns = ans;
       });
     } catch (e) {
-      console.log("Transaction failed: ", e);
+      throw e;
     }
+    return updatedAns;
   }
 }

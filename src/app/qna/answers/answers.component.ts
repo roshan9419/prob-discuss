@@ -118,7 +118,42 @@ export class AnswersComponent implements OnInit {
       return;
     }
 
-    await this.dbService.addRemoveUpvote(ans.answerId, this.authService.userId!, true);
+    try {
+      let isAdd = true;
+      if (ans.upvotes?.includes(this.currentUserId()!)) {
+        isAdd = false; // Already added, now remove it
+      }
+
+      if (!isAdd) {
+        this.dialogService.confirm("Are you sure, you want to remove your vote?",
+          () => {
+            this.removeUpvote(ans);
+          }, () => {
+            // Dialog cancelled
+          }
+        );
+      } else {
+        this.addUpvote(ans);
+      }
+    } catch (e) {
+      this.snackbarService.showSnackbar("Something went wrong", SnackbarType.INFO);
+    }
+  }
+
+  async addUpvote(ans: Answer) {
+    const resp = await this.dbService.addRemoveUpvote(ans.answerId, this.authService.userId!, true);
+    if (resp) {
+      this.answers[this.answers.indexOf(ans)] = resp;
+      this.snackbarService.showSnackbar("Successfuly upvoted this answer", SnackbarType.SUCCESS);
+    }
+  }
+
+  async removeUpvote(ans: Answer) {
+    const resp = await this.dbService.addRemoveUpvote(ans.answerId, this.authService.userId!, false);
+    if (resp) {
+      this.answers[this.answers.indexOf(ans)] = resp;
+      this.snackbarService.showSnackbar("Your vote has been removed", SnackbarType.SUCCESS);
+    }
   }
 
   markAcceptedAnswer(ans: Answer) {
@@ -139,6 +174,7 @@ export class AnswersComponent implements OnInit {
         } catch (e) {
           console.log(e);
         }
-      }, () => { })
+      }, () => { }
+    );
   }
 }
