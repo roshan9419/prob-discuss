@@ -57,4 +57,8 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  onSearch(event: Event) {
+    console.log("Search", event);
+  }
+
 }
