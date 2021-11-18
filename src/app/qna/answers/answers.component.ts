@@ -8,6 +8,7 @@ import { Question } from 'src/app/core/models/question';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
+import { DialogService } from 'src/app/core/services/dialog.service';
 
 @Component({
   selector: 'app-answers',
@@ -33,7 +34,7 @@ export class AnswersComponent implements OnInit {
 
   answer: Answer = new Answer();
 
-  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(
@@ -111,5 +112,23 @@ export class AnswersComponent implements OnInit {
     if (type === 'oldest' && this.activeAnswerType === AnswerType.OLDEST) return true;
     if (type === 'votes' && this.activeAnswerType === AnswerType.MOST_VOTED) return true;
     return false;
+  }
+
+  markAcceptedAnswer(ans: Answer) {
+    let dialogMessage = "You're going to mark it as accepted answer. Does this answer resolved your problem?";
+    let clear = false;
+    if (this.question.acceptedAnsId && this.question.acceptedAnsId === ans.answerId) {
+      clear = true;
+      dialogMessage = "Are you sure you want to unmark the accepted answer?";
+    }
+    this.dialogService.confirm(dialogMessage,
+      async () => {
+        this.question.acceptedAnsId = clear ? '' : ans.answerId;
+        try {
+          await this.dbService.updateQuestion(this.question);
+        } catch (e) {
+          console.log(e);
+        }
+      }, () => { })
   }
 }

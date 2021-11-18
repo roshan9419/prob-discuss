@@ -37,7 +37,7 @@ export class DBService {
   async addQuestion(question: Question) {
     const qDocRef = this.db.collection('questions').ref.doc();
     question.questionId = qDocRef.id;
-    await qDocRef.set(question.toJson());
+    await qDocRef.set(this.toJson(question));
     return question.questionId;
   }
 
@@ -46,7 +46,7 @@ export class DBService {
     if (!qDocRef.exists) {
       throw new Error("Question not found");
     }
-    await qDocRef.ref.set(question.toJson());
+    await qDocRef.ref.set(this.toJson(question));
   }
 
   async getQuestionById(questionId: string) {
@@ -129,7 +129,7 @@ export class DBService {
   async addAnswer(answer: Answer) {
     const aDocRef = this.db.collection('answers').ref.doc();
     answer.answerId = aDocRef.id;
-    await aDocRef.set(answer.toJson());
+    await aDocRef.set(this.toJson(answer));
   }
 
   async fetchAnswersByQuestionId(questionId: string, answerType: AnswerType, lastFetchedId?: any, limit: number = 10) {

@@ -13,6 +13,7 @@ import { AuthService } from './services/auth.service';
 import { DBService } from './services/db.service';
 import { StorageService } from './services/storage.service';
 import { FooterComponent } from './footer/footer.component';
+import { DialogService } from './services/dialog.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FooterComponent } from './footer/footer.component';
   providers: [
     DBService,
     AuthService,
-    StorageService
+    StorageService,
+    DialogService
   ],
   exports: [
     NavbarComponent,

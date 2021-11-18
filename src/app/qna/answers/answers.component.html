@@ -1,3 +1,5 @@
+<app-confirm></app-confirm>
+
 <div *ngIf="isLoading else showAns">
     <p>Loading Answers...</p>
 </div>
@@ -7,10 +9,13 @@
         <div class="ans-count">{{answers.length === 0 ? 'No answers yet' : answers.length === 1 ? '1 Answer' :
             (answers.length + ' Answers')}}
         </div>
-        <div class="filter-btns" *ngIf="answers.length !== 0">
-            <a class="btn btn-recent" [ngClass]="{'filter-active': selectedTab('recent') }" [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'recent'}">Recent</a>
-            <a class="btn btn-oldest" [ngClass]="{'filter-active': selectedTab('oldest') }" [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'oldest'}">Oldest</a>
-            <a class="btn btn-votes" [ngClass]="{'filter-active': selectedTab('votes') }" [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'votes'}">Votes</a>
+        <div class="filter-btns" *ngIf="answers.length > 1">
+            <a class="btn btn-recent" [ngClass]="{'filter-active': selectedTab('recent') }"
+                [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'recent'}">Recent</a>
+            <a class="btn btn-oldest" [ngClass]="{'filter-active': selectedTab('oldest') }"
+                [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'oldest'}">Oldest</a>
+            <a class="btn btn-votes" [ngClass]="{'filter-active': selectedTab('votes') }"
+                [routerLink]="['/question/' + question.questionId]" [queryParams]="{sort: 'votes'}">Votes</a>
         </div>
     </div>
     <div class="container" *ngFor="let ans of answers">
@@ -18,19 +23,27 @@
             <div class="ans-left">
                 <div class="upvote-btn"></div>
                 <div class="upvote-value">{{ans.upvotes?.length || 0}}</div>
-                <div class="accepted-ans"><i class="fa fa-check"></i></div>
+                <div class="tick" [ngClass]="{'accepted-ans': question.acceptedAnsId === ans.answerId}"
+                    *ngIf="question.userId === currentUserId(); else viewerTick" (click)="markAcceptedAnswer(ans)">
+                    <i class="fa fa-check"></i>
+                </div>
+                <ng-template #viewerTick>
+                    <div class="tick accepted-ans" *ngIf="question.acceptedAnsId === ans.answerId"><i
+                            class="fa fa-check"></i></div>
+                </ng-template>
+
             </div>
-    
+
             <div class="ans-body">
                 <!-- <div *ngIf="ans.userId === currentUserId()">
                     <b>Your Answer</b>
                 </div> -->
-    
+
                 <quill-view-html [ngStyle]="editorStyle" [content]="ans.content" theme="snow"></quill-view-html>
             </div>
         </div>
-        <app-qna-user-info [imageUrl]="usersMap.get(ans.userId)?.photoUrl!" [name]="ans.username" [userId]="ans.userId" [isQues]="false"
-                [date]="ans.answeredDate"></app-qna-user-info>
+        <app-qna-user-info [imageUrl]="usersMap.get(ans.userId)?.photoUrl!" [name]="ans.username" [userId]="ans.userId"
+            [isQues]="false" [date]="ans.answeredDate"></app-qna-user-info>
     </div>
 
     <div *ngIf="isUserAllowedToAns" class="container m-3">

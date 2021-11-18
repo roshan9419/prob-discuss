@@ -65,8 +65,12 @@
     padding: 0;
 }
 
-.accepted-ans {
+.tick {
     cursor: pointer;
     font-size: 32px;
+    color: rgb(160, 157, 157, 0.767);
+}
+
+.accepted-ans {
     color: rgb(14, 145, 14);
 }
