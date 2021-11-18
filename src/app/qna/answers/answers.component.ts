@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ContentChange } from 'ngx-quill';
 import { Answer } from 'src/app/core/models/answer';
 import { AnswerType } from 'src/app/core/models/enums/answerType';
+import { Status } from 'src/app/core/models/enums/status';
 import { Question } from 'src/app/core/models/question';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -37,7 +38,7 @@ export class AnswersComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(
       params => {
-        console.log(params);
+        // console.log(params);
         let sortType = params.sort;
         if (!sortType || sortType === 'recent') sortType = AnswerType.RECENT;
         else if (sortType === 'votes') sortType = AnswerType.MOST_VOTED;
@@ -82,6 +83,7 @@ export class AnswersComponent implements OnInit {
       this.answer.questionTitle = this.question.title;
       this.answer.userId = this.authService.userId!;
       this.answer.username = this.authService.userName!;
+      this.answer.status = Status.ACTIVE;
       this.answer.answeredDate = new Date();
 
       await this.dbService.addAnswer(this.answer);

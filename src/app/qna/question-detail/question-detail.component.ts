@@ -33,9 +33,10 @@ export class QuestionDetailComponent implements OnInit {
     this.activatedroute.params.subscribe(
       params => {
         this.questionId = params.questionId;
-        console.log(this.questionId);
+        // console.log(this.questionId);
         if (!this.questionId) {
-          console.log("Url not found");
+          // console.log("Url not found");
+          this.route.navigateByUrl("400");
         }
         this.getQuestion();
       }

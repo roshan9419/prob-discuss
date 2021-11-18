@@ -2,6 +2,10 @@ body {
     background: #eee;
 }
 
+a {
+    text-decoration: none;
+}
+
 .profile-photo img {
     border-radius: 5%;
     margin-right: 20px;
@@ -72,9 +76,6 @@ body {
     float: right;
 }
 
-.skill-input {
-/*  */
-}
 
 .nav-item {
     cursor: pointer;

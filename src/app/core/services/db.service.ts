@@ -4,15 +4,14 @@ import { Question } from '../models/question';
 import { Answer } from '../models/answer';
 import { AnswerType } from '../models/enums/answerType';
 import { User } from '../models/user';
+import { Status } from '../models/enums/status';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DBService {
 
-  constructor(private db: AngularFirestore) {
-    console.log("DBService Initialized");
-  }
+  constructor(private db: AngularFirestore) {}
 
   toJson(data: Object) {
     return Object.assign({}, data);
@@ -78,12 +77,17 @@ export class DBService {
   }
 
   async fetchRecentQuestions(limitSize: number, isForward: boolean, pageToken: string) {
-    let query = this.db.collection<Question>('questions').ref.orderBy('askedDate', 'desc').limit(limitSize + 1);
+    let query = this.db
+      .collection<Question>('questions').ref
+      .where('status', '==', Status.ACTIVE)
+      .orderBy('askedDate', 'desc')
+      .limit(limitSize + 1);
 
     if (pageToken) {
       const docSnap = await this.db.collection('questions').ref.doc(pageToken).get();
-      if (!docSnap.exists) return;
-      console.log('isForward==>', isForward);
+      if (!docSnap.exists) {
+        throw new Error("Token not found");
+      };
       query = isForward
         ? query.startAt(docSnap).limit(limitSize + 1)
         : query.endBefore(docSnap).limitToLast(limitSize + 1);
@@ -132,6 +136,7 @@ export class DBService {
     let query = this.db
       .collection<Answer>('answers').ref
       .where('questionId', '==', questionId)
+      .where('status', '==', Status.ACTIVE)
       .limit(limit);
 
     if (answerType === AnswerType.MOST_VOTED) {

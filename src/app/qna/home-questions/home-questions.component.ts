@@ -21,7 +21,7 @@ export class HomeQuestionsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedroute.queryParams.subscribe(
       params => {
-        console.log(params);
+        // console.log(params);
         this.loadRecentQuestions(params.pageToken, params.f);
       }
     );
@@ -36,8 +36,7 @@ export class HomeQuestionsComponent implements OnInit {
       if (forward === undefined || forward === null) forward = true;
       const response = await this.dbService.fetchRecentQuestions(5, forward, pageToken);
       if (!response) {
-        this.route.navigateByUrl('404');
-        return;
+        throw new Error("Something went wrong");
       }
 
       this.nextPageToken = response.nextPageToken;
@@ -46,6 +45,7 @@ export class HomeQuestionsComponent implements OnInit {
       this.isLoading = false;
     } catch (e) {
       console.log(e);
+      this.route.navigateByUrl('404');
     }
   }
 

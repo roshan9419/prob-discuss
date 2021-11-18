@@ -11,7 +11,8 @@
                 </div>
                 <div class="profile-body">
                     <h2 class="profile-heading">{{viewUserObj.username}}</h2>
-                    <p class="lead"><i class="fa fa-birthday-cake"></i> Joined {{viewUserObj.registeredDate | dateAgo}}</p>
+                    <p class="lead"><i class="fa fa-birthday-cake"></i> Joined {{viewUserObj.registeredDate | dateAgo}}
+                    </p>
                 </div>
             </div>
         </div>
@@ -55,7 +56,8 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <span (click)="onSkillTapped(skill)" class="badge" style="background-color: rgb(103, 53, 241); cursor: pointer;"
+                        <span (click)="onSkillTapped(skill)" class="badge"
+                            style="background-color: rgb(103, 53, 241); cursor: pointer;"
                             *ngFor="let skill of userEditSkills">
                             {{ isEditSkillEnabled ? (skill + ' x') : skill }}
                         </span>
@@ -90,18 +92,20 @@
                     <div *ngIf="selectedActTab === activityTabs[0]" role="tabpanel" class="tab-pane active"
                         id="questions">
                         <div class="ques-item" *ngFor="let question of questionsList">
-                            <i class="fa fa-question-circle"></i><a (click)="onViewQuestion(question.questionId)">
+                            <i class="fa fa-question-circle"></i><a [routerLink]="['/question/' + question.questionId]">
                                 {{question.title}}</a>
                         </div>
                         <div *ngIf="questionsList.length === 0">
                             No questions Asked<br>
-                            <a class="btn btn-primary" routerLink='ask-question'>Ask Question</a>
+                            <a *ngIf="isUserOwnProfile()" class="btn btn-primary" routerLink='ask-question'>Ask
+                                Question</a>
                         </div>
                     </div>
                     <div *ngIf="selectedActTab === activityTabs[1]" role="tabpanel" class="tab-pane active"
                         id="answers">
                         <div class="ques-item" *ngFor="let answer of answersList">
-                            <i class="fa fa-reply-all"></i><a (click)="onViewQuestion(answer.questionId)">
+                            <i class="fa fa-reply-all"></i>
+                            <a [routerLink]="['/question/' + answer.questionId]">
                                 {{answer.questionTitle}}</a>
                         </div>
                         <div *ngIf="answersList.length === 0">

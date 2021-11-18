@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { ContentChange } from 'ngx-quill';
+import { Status } from 'src/app/core/models/enums/status';
 import { Question } from 'src/app/core/models/question';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
@@ -59,6 +60,7 @@ export class AddQuestionComponent implements OnInit {
       }
       this.question.userId = this.authService.userId!;
       this.question.username = this.authService.userName!;
+      this.question.status = Status.ACTIVE;
       this.question.askedDate = new Date();
       if (this.tags.length !== 0) this.question.tags = this.tags;
 

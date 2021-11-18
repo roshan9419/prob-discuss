@@ -1,5 +1,3 @@
-import { Timestamp } from "rxjs"
-
 export class Question {
     questionId!: string
     userId!: string
@@ -9,6 +7,8 @@ export class Question {
     tags?: string[]
     imgPaths?: string[]
     upvotes?: string[]
+    acceptedAnsId?: string
+    status!: string
     askedDate!: Date
 
     toJson() {

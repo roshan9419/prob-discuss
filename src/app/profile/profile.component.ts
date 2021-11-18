@@ -71,10 +71,6 @@ export class ProfileComponent implements OnInit {
     this.answersList = await this.dbService.fetchUserAnswers(this.viewUserObj.userId);
   }
 
-  onViewQuestion(questionId: string) {
-    this.route.navigateByUrl(`/question/${questionId}`);
-  }
-
   toggleEditSkillBtn() {
     this.isEditSkillEnabled = !this.isEditSkillEnabled;
     if (!this.isEditSkillEnabled) {
