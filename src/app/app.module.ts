@@ -10,10 +10,12 @@ import { SharedModule } from './shared/shared.module';
 import { QnaModule } from './qna/qna.module';
 import { ProfileModule } from './profile/profile.module';
 import { SearchModule } from './search/search.module';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

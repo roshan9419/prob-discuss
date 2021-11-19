@@ -4,7 +4,7 @@
 
 <ng-template #showQues>
     <div class="container my-3">
-        <h1>{{ question!.title }}</h1>
+        <p class="heading">{{ question!.title }}</p>
         <hr>
         <quill-view-html [content]="question!.content" theme="snow"></quill-view-html>
 

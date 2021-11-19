@@ -1,6 +1,6 @@
 body {
     max-width: max-content;
-margin: auto;
+    margin: auto;
 }
 
 .img-container {
@@ -14,4 +14,18 @@ margin: auto;
     margin-right: 10px;
     margin-bottom: 10px;
     cursor: pointer;
+}
+
+.heading {
+    margin-top: 100px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.heading::before {
+    background-color: rgb(48, 160, 230);
+    margin-right: 10px;
+    content: '.';
+    color: rgb(48, 160, 230);
+    padding: 0px;
 }
