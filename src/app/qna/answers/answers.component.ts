@@ -25,6 +25,10 @@ export class AnswersComponent implements OnInit {
 
   @Input() question!: Question;
 
+  shareSubject: string = 'ProbDiscuss Question';
+  shareBody: string = '';
+  shareLink: string = '';
+
   answers: Answer[] = [];
   usersMap = new Map<string, User>();
   activeAnswerType: AnswerType = AnswerType.RECENT
@@ -34,7 +38,9 @@ export class AnswersComponent implements OnInit {
 
   answer: Answer = new Answer();
 
-  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private dialogService: DialogService, private snackbarService: SnackbarService) { }
+  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private dialogService: DialogService, private snackbarService: SnackbarService) {
+
+  }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(
@@ -48,6 +54,22 @@ export class AnswersComponent implements OnInit {
         this.fetchAnswers(sortType);
       }
     );
+    this.shareLink = `https://probdiscuss-qna.firebaseapp.com/question/${this.question.questionId}`;
+    this.shareBody = `Someone asked a question, \"${this.question.title}\"\n\nHave a look on this question:\n${this.shareLink}`;
+  }
+
+  // Share links
+  get getEmailLink(): string {
+    return encodeURI("mailto:?subject=" + this.shareSubject + "&body=" + this.shareBody);
+  }
+
+  get getLinkedInLink(): string {
+    //https://www.linkedin.com/shareArticle?mini=true&url=http://developer.linkedin.com&title=LinkedIn%20Developer%20Network&summary=My%20favorite%20developer%20program&source=LinkedIn
+    return encodeURI("https://www.linkedin.com/shareArticle?mini=true&url=" + this.shareLink);
+  }
+
+  get getTwitterLink(): string {
+    return encodeURI("https://twitter.com/share?url=" + this.shareLink);
   }
 
   async fetchAnswers(answerType: AnswerType) {

@@ -78,3 +78,15 @@
 .accepted-ans {
     color: rgb(14, 145, 14);
 }
+
+.ans-container {
+    margin-top: 20px;
+}
+
+.ans-heading {
+    font-size: 20px;
+}
+
+.share-links {
+    text-decoration: none;
+}

@@ -7,11 +7,6 @@
         <h1>{{ question!.title }}</h1>
         <hr>
         <quill-view-html [content]="question!.content" theme="snow"></quill-view-html>
-        
-        <div *ngIf="question!.tags && question!.tags.length !== 0">
-            <b>Tags</b>
-            <app-tags class="container" [tags]="question!.tags"></app-tags>
-        </div>
 
         <div class="img-container">
             <div *ngFor="let imgPath of question!.imgPaths">
@@ -20,7 +15,12 @@
             </div>
         </div>
 
-        <app-qna-user-info [imageUrl]="user?.photoUrl!" [name]="question?.username" [userId]="question?.userId" [isQues]="true" [date]="question?.askedDate"></app-qna-user-info>
+        <div *ngIf="question!.tags && question!.tags.length !== 0">
+            <app-tags class="container" [tags]="question!.tags"></app-tags>
+        </div>
+
+        <app-qna-user-info [imageUrl]="user?.photoUrl!" [name]="question?.username" [userId]="question?.userId"
+            [isQues]="true" [date]="question?.askedDate"></app-qna-user-info>
 
         <hr style="margin-top: 100px;">
         <app-answers [question]="question!"></app-answers>
