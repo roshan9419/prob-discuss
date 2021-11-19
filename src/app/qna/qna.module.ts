@@ -50,15 +50,17 @@ var formats = [
     SharedModule,
     QuillModule.forRoot({
       modules: {
-        'toolbar': [
+        toolbar: [
           ['bold', 'italic', 'underline', 'strike'],
           [{ 'script': 'super' }, { 'script': 'sub' }],
           [{ 'header': 1 }, { 'header': 2 }, 'blockquote', 'code-block'],
           [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
           ['link', 'formula'],
-        ]
+        ],
+        syntax: true,
       },
-      formats: formats
+      formats: formats,
+      theme: 'snow'
     })
   ],
   exports: [

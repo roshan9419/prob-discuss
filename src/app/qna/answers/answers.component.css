@@ -75,6 +75,10 @@
     color: rgb(160, 157, 157, 0.767);
 }
 
+.no-pointer {
+    cursor: default;
+}
+
 .accepted-ans {
     color: rgb(14, 145, 14);
 }
