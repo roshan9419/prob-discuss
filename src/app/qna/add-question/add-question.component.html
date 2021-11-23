@@ -8,7 +8,7 @@
         <div class="form-group mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" placeholder="e.g. How to resolve this issue...?" class="form-control" name="title"
-                id="title" [(ngModel)]="question.title">
+                id="title" [(ngModel)]="question.title" minlength="10" required>
         </div>
         <div class="form-group mb-3">
             <label for="body" class="form-label">Body</label>

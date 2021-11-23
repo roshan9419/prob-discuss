@@ -38,7 +38,13 @@ export class AnswersComponent implements OnInit {
 
   answer: Answer = new Answer();
 
-  constructor(private dbService: DBService, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private dialogService: DialogService, private snackbarService: SnackbarService) {
+  constructor(
+    private dbService: DBService,
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private dialogService: DialogService,
+    private snackbarService: SnackbarService) {
 
   }
 
@@ -95,9 +101,25 @@ export class AnswersComponent implements OnInit {
     }
   }
 
+  validateAnswer(): boolean {
+    if (!this.answer.content) {
+      this.snackbarService.showSnackbar("Answer must not be empty", SnackbarType.WARNING);
+      return false;
+    }
+    if (this.answer.content.split(" ").length < 10) {
+      this.snackbarService.showSnackbar("Minimum 10 words required", SnackbarType.WARNING);
+      return false;
+    }
+    if (this.answer.content.split(" ").length > 2000) {
+      this.snackbarService.showSnackbar("Maximum 2000 words are allowed", SnackbarType.WARNING);
+      return false;
+    }
+    return true;
+  }
+
   async addAnswer() {
-    if (!this.answer.content) return;
     try {
+      if (!this.validateAnswer()) return;
       if (!this.authService.isAuthValidated) {
         this.snackbarService.showSnackbar("You're not logged in", SnackbarType.DANGER);
         return;
@@ -110,9 +132,12 @@ export class AnswersComponent implements OnInit {
       this.answer.answeredDate = new Date();
 
       await this.dbService.addAnswer(this.answer);
-      document.getElementsByClassName("editor")[0].innerHTML = "";
-      this.answer = new Answer();
       this.snackbarService.showSnackbar("Answer published successfuly", SnackbarType.SUCCESS);
+      this.isUserAllowedToAns = false;
+      document.getElementsByClassName("editor")[0].innerHTML = "";
+      setTimeout(() => {
+        this.router.navigateByUrl(`/question/${this.question.questionId}`);
+      }, 1000);
     } catch (e) {
       this.snackbarService.showSnackbar('Something went wrong, please try again.', SnackbarType.WARNING);
     }

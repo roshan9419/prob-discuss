@@ -21,11 +21,6 @@
         </div>
     </div>
 
-    <div *ngIf="answers.length === 0">
-        No answers yet, know someone who can answer? Share a link to this question via <a class="share-links"
-            href="{{getEmailLink}}">email</a>, <a class="share-links" href="{{getLinkedInLink}}" target="_blank">LinkedIn</a> or <a class="share-links" href="{{getTwitterLink}}" target="_blank">Twitter</a>
-    </div>
-
     <div class="container" *ngFor="let ans of answers">
         <div class="ans-container">
             <div class="ans-left">
@@ -56,15 +51,21 @@
             [isQues]="false" [date]="ans.answeredDate"></app-qna-user-info>
     </div>
 
+    <hr style="margin-top: 100px;">
+    <div>
+        {{answers.length === 0 ? 'No answers yet, ' : ''}}Know someone who can answer? Share a link to this question via
+        <a class="share-links" href="{{getEmailLink}}">email</a>, <a class="share-links" href="{{getLinkedInLink}}"
+            target="_blank">LinkedIn</a> or <a class="share-links" href="{{getTwitterLink}}" target="_blank">Twitter</a>
+    </div>
     <div *ngIf="isUserAllowedToAns" class="ans-container">
         <hr>
         <div id="#answer">
             <p class="ans-heading">Your Answer</p>
             <form (ngSubmit)="addAnswer()">
                 <div class="form-group my-3">
-                    <quill-editor [styles]="{'min-height': '120px'}" [maxLength]="1000" class="editor"
+                    <quill-editor [styles]="{'min-height': '120px'}" class="editor"
                         (onContentChanged)="onEditorChange($event)"
-                        placeholder="Mention all the points to cover your answer    "></quill-editor>
+                        placeholder="Mention all the points to cover your answer"></quill-editor>
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!answer.content">Post Your
                     Answer</button>

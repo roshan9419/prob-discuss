@@ -54,8 +54,33 @@ export class AddQuestionComponent implements OnInit {
     if (event.text.trim().length === 0) this.question.content = '';
   }
 
+  validateQuestion(): boolean {
+    if (this.question.title.length < 10) {
+      this.snackbarService.showSnackbar("Minimum title length is 10", SnackbarType.WARNING);
+      return false;
+    }
+    if (this.question.title.length > 200) {
+      this.snackbarService.showSnackbar("Maximum title length is 200", SnackbarType.WARNING);
+      return false;
+    }
+    if (this.question.content.split(" ").length < 10) {
+      this.snackbarService.showSnackbar("Minimum 10 words required", SnackbarType.WARNING);
+      return false;
+    }
+    if (this.question.content.split(" ").length > 2000) {
+      this.snackbarService.showSnackbar("Maximum 2000 words are allowed", SnackbarType.WARNING);
+      return false;
+    }
+    if (this.tags.length === 0) {
+      this.snackbarService.showSnackbar("Provide at-least 1 tag", SnackbarType.WARNING);
+      return false;
+    }
+    return true;
+  }
+
   async onSubmit() {
     try {
+      if (!this.validateQuestion()) return;
       if (!this.authService.isAuthValidated) {
         this.snackbarService.showSnackbar("You're not logged in", SnackbarType.DANGER);
         return;
