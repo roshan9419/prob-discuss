@@ -5,6 +5,7 @@ import { Answer } from '../models/answer';
 import { AnswerType } from '../models/enums/answerType';
 import { User } from '../models/user';
 import { Status } from '../models/enums/status';
+import { QnAComment } from '../models/qna-comment';
 
 @Injectable({
   providedIn: 'root'
@@ -230,5 +231,32 @@ export class DBService {
       throw e;
     }
     return updatedAns;
+  }
+
+  async addCommentOnQnA(qnaComment: QnAComment, isQuestionComment: boolean) {
+    const qnaId: string = qnaComment.qnaId;
+    const qnaDocRef = await this.db.collection(isQuestionComment ? 'questions' : 'answers').doc(qnaId).ref.get()
+
+    if (!qnaDocRef.exists) {
+      throw new Error("Document not found");
+    }
+
+    const commentsColRef = qnaDocRef.ref.collection('comments');
+    const commentDocRef = commentsColRef.doc();
+    qnaComment.commentId = commentDocRef.id;
+    await commentDocRef.set(this.toJson(qnaComment));
+  }
+
+  async fetchQnAComments(qnaId: string, isQuestionComment: boolean) {
+    const querySnapshot = await this.db
+      .collection(isQuestionComment ? 'questions' : 'answers')
+      .doc(qnaId).collection<QnAComment>('comments').ref.get();
+
+    const comments: QnAComment[] = [];
+    querySnapshot.docs.forEach((comment) => {
+      comments.push(comment.data());
+    });
+
+    return comments;
   }
 }

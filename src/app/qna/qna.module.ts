@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { QuillModule } from 'ngx-quill';
 import { AnswersComponent } from './answers/answers.component';
 import { QnaUserInfoComponent } from './qna-user-info/qna-user-info.component';
+import { CommentsComponent } from './comments/comments.component';
 
 var formats = [
   'background',
@@ -41,7 +42,8 @@ var formats = [
     QuestionItemComponent,
     AddQuestionComponent,
     AnswersComponent,
-    QnaUserInfoComponent
+    QnaUserInfoComponent,
+    CommentsComponent
   ],
   imports: [
     CommonModule,
@@ -68,7 +70,8 @@ var formats = [
     HomeQuestionsComponent,
     QuestionItemComponent,
     AddQuestionComponent,
-    QnaUserInfoComponent
+    QnaUserInfoComponent,
+    CommentsComponent
   ]
 })
 export class QnaModule { }

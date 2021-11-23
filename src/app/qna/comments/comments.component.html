@@ -1,0 +1,8 @@
+<div *ngFor="let comment of comments">
+    {{comment.content}} - <a routerLink="/profile">{{comment.username}}</a>
+</div>
+<form (ngSubmit)="addComment()">
+    <textarea name="input" minlength="10" required [(ngModel)]="inputComment">
+    </textarea>
+    <input type="submit" name="submit" value="Add Comment">
+</form>
