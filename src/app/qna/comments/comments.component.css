@@ -1,0 +1,68 @@
+.item {
+    padding: 3px 10px 5px 10px;
+    border-top: .5px solid rgba(68, 68, 68, 0.137);
+}
+
+.content, .date, a, .addBtn, .char-counter {
+    font-size: 12px;
+    line-height: 10px;
+}
+
+.date {
+    color: rgb(99, 99, 99);
+}
+
+a {
+    text-decoration: none;
+}
+
+.addBtn {
+    margin-top: 10px;
+    color: rgb(100, 100, 100);
+    cursor: pointer;
+    padding: 5px 0px;
+}
+
+.addBtn:hover {
+    color: rgba(36, 108, 241, 0.801);
+}
+
+.hr-line {
+    border-top: .5px solid rgba(68, 68, 68, 0.137);
+}
+
+.comment-container {
+    /* background-color: aquamarine; */
+    display: flex;
+    margin-top: 10px;
+}
+
+.left-aria {
+    flex-grow: 1;
+}
+
+.char-counter {
+    margin-top: 5px;
+    color: rgb(109, 109, 109);
+}
+
+#comment-field {
+    height: 80px;
+}
+
+.action-btns {
+    margin-left: 10px;
+    display: grid;
+    height: fit-content;
+}
+
+.cancel {
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+textarea:focus,
+textarea:active {
+    outline: none;
+    box-shadow: none;
+}

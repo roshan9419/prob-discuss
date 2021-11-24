@@ -40,15 +40,14 @@
             </div>
 
             <div class="ans-body">
-                <!-- <div *ngIf="ans.userId === currentUserId()">
-                    <b>Your Answer</b>
-                </div> -->
-
                 <quill-view-html [ngStyle]="editorStyle" [content]="ans.content" theme="snow"></quill-view-html>
+
+                <app-qna-user-info [imageUrl]="usersMap.get(ans.userId)?.photoUrl!" [name]="ans.username"
+                    [userId]="ans.userId" [isQues]="false" [date]="ans.answeredDate"></app-qna-user-info>
+
+                <app-comments [qnaId]="ans.answerId" [isQuestionComment]="false"></app-comments>
             </div>
         </div>
-        <app-qna-user-info [imageUrl]="usersMap.get(ans.userId)?.photoUrl!" [name]="ans.username" [userId]="ans.userId"
-            [isQues]="false" [date]="ans.answeredDate"></app-qna-user-info>
     </div>
 
     <hr style="margin-top: 100px;">
@@ -57,7 +56,7 @@
         <a class="share-links" href="{{getEmailLink}}">email</a>, <a class="share-links" href="{{getLinkedInLink}}"
             target="_blank">LinkedIn</a> or <a class="share-links" href="{{getTwitterLink}}" target="_blank">Twitter</a>
     </div>
-    <div *ngIf="isUserAllowedToAns" class="ans-container">
+    <div *ngIf="isUserAllowedToAns">
         <hr>
         <div id="#answer">
             <p class="ans-heading">Your Answer</p>

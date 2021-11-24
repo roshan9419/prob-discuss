@@ -34,7 +34,7 @@
 .ans-container {
     /* padding: 10px; */
     /* border: 1px solid black; */
-    display: inline-flex;
+    display: flex;
 }
 
 .ans-left {
@@ -65,8 +65,10 @@
 }
 
 .ans-body {
-    /* background-color: aqua; */
+    /* background-color: aquamarine; */
     padding: 0;
+    height: fit-content;
+    flex-grow: 1;
 }
 
 .tick {

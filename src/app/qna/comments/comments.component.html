@@ -1,8 +1,29 @@
-<div *ngFor="let comment of comments">
-    {{comment.content}} - <a routerLink="/profile">{{comment.username}}</a>
+<div class="w-25 p-3"></div>
+<div class="item" *ngFor="let comment of comments">
+    <span class="content">{{comment.content}} - </span>
+    <a routerLink="/profile">{{comment.username}}</a>
+    <span class="date"> {{comment.commentDate | dateAgo}}</span>
 </div>
-<form (ngSubmit)="addComment()">
-    <textarea name="input" minlength="10" required [(ngModel)]="inputComment">
-    </textarea>
-    <input type="submit" name="submit" value="Add Comment">
-</form>
+
+
+<div *ngIf="addCommentEnabled; else showAddCommentButton" class="comment-container">
+    <div class="left-aria">
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="comment-field" maxlength="{{maxChar}}"
+                [(ngModel)]="inputComment"></textarea>
+            <label for="comment-field">Comments</label>
+        </div>
+        <p class="char-counter">{{maxChar - inputComment.trim().length}} characters left</p>
+    </div>
+
+    <div class="action-btns">
+        <button class="btn btn-primary btn-sm" (click)="addComment()"
+            [disabled]="inputComment.trim().length < 10 || inputComment.trim().length > maxChar">Add Comment</button>
+        <a class="cancel" (click)="addCommentEnabled = false">Cancel</a>
+    </div>
+
+</div>
+<ng-template #showAddCommentButton>
+    <div class="hr-line" *ngIf="comments.length !== 0"></div>
+    <p class="addBtn" (click)="addCommentEnabled = true">Add a comment</p>
+</ng-template>

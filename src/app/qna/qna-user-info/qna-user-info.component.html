@@ -1,4 +1,4 @@
-<div class="card-container">
+<div class="card-container" [ngClass]="{'light-background': !isQues}">
     <small class="time">{{(isQues ? 'asked ' : 'answered ') + (date | dateAgo)}}</small>
     <div class="user-det">
         <app-user-dp [borderRadius]="10"
