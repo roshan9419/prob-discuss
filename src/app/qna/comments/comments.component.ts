@@ -17,18 +17,26 @@ export class CommentsComponent implements OnInit {
 
   comments: QnAComment[] = [];
   inputComment: string = ''
-  
+
   addCommentEnabled: boolean = false;
   maxChar = 500
+
+  commentsLimit: number = 4
+  isExpanded: boolean = false;
 
   constructor(private authService: AuthService, private dbService: DBService, private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
     this.fetchComments();
   }
-  
+
+  getComments(): QnAComment[] {
+    return this.isExpanded ? this.comments : this.comments.slice(0, this.commentsLimit);
+  }
+
   async fetchComments() {
     this.comments = await this.dbService.fetchQnAComments(this.qnaId, this.isQuestionComment);
+    this.comments = this.comments.sort((a, b) => a.commentDate < b.commentDate ? -1 : a.commentDate === b.commentDate ? 0 : 1);
   }
 
   addComment() {
@@ -36,7 +44,7 @@ export class CommentsComponent implements OnInit {
       this.snackbarService.showSnackbar("Login to comment", SnackbarType.INFO);
       return;
     }
-    if (!this.inputComment || this.inputComment.length < 100 || this.inputComment.length > this.maxChar) return;
+    if (!this.inputComment || this.inputComment.length < 1 || this.inputComment.length > this.maxChar) return;
     try {
       const comment = new QnAComment();
       comment.content = this.inputComment;
@@ -49,9 +57,8 @@ export class CommentsComponent implements OnInit {
       this.snackbarService.showSnackbar("Comment added", SnackbarType.SUCCESS);
       this.addCommentEnabled = false;
       this.inputComment = "";
-    } catch(e) {
+    } catch (e) {
       this.snackbarService.showSnackbar("Something went wrong", SnackbarType.INFO);
     }
   }
-
 }

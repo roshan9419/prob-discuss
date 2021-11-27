@@ -66,3 +66,8 @@ textarea:active {
     outline: none;
     box-shadow: none;
 }
+
+.more-comments {
+    cursor: pointer;
+    /* margin-bottom: 10px; */
+}
