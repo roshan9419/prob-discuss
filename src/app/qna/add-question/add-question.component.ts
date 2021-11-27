@@ -23,6 +23,8 @@ export class AddQuestionComponent implements OnInit {
   tags: string[] = [];
   inputTag: string = '';
 
+  imageUrls: string[] | ArrayBuffer[] | null[] = []
+
   constructor(private elementRef: ElementRef, private dbService: DBService, private authService: AuthService, private storageService: StorageService, private snackbarService: SnackbarService) {
     this.question = new Question();
   }
@@ -32,7 +34,6 @@ export class AddQuestionComponent implements OnInit {
       .addEventListener('keydown', (e: KeyboardEvent) => {
         const validKey = e.key === ' ' || e.key === 'Enter';
         if (validKey) $(this)[0].addSkill();
-        
         if (!(/^[a-zA-Z()]+$/.test(e.key))) {
           e.preventDefault();
         }
@@ -122,7 +123,6 @@ export class AddQuestionComponent implements OnInit {
     const fileList = target.files as FileList;
     this.files = [];
     if (fileList.length > 5) {
-      (<HTMLInputElement>document.getElementById("files")).value = '';
       alert("Maximum 5 images are allowed");
       return;
     }
@@ -130,13 +130,18 @@ export class AddQuestionComponent implements OnInit {
       const file = fileList.item(i);
       if ((file?.size || 0) > 1000000) {
         this.files = [];
-        (<HTMLInputElement>document.getElementById("files")).value = '';
         alert("Some file's size are greater than 1mb");
         return;
       }
-      if (file) this.files[i] = file;
+      if (file) {
+        this.files[i] = file;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = event => {
+          this.imageUrls[i] = reader.result;
+        };
+      }
     }
-    console.log(this.files);
   }
 
   clearFields() {
@@ -144,13 +149,18 @@ export class AddQuestionComponent implements OnInit {
     this.question.content = '';
     this.tags = [];
     this.inputTag = '';
+    this.files = [];
     document.getElementsByClassName("ql-editor")[0].innerHTML = "";
-    (<HTMLInputElement>document.getElementById("files")).value = '';
     this.question = new Question();
   }
 
   deleteLastTag() {
     this.tags.splice(-1);
+  }
+
+  removeFile(idx: number) {
+    this.files.splice(idx, 1);
+    this.imageUrls.splice(idx, 1);
   }
 
 }

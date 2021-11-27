@@ -24,14 +24,30 @@
                 <app-tags [tags]="tags"></app-tags>
                 <div class="del-last-tag" (click)="deleteLastTag()"><i class="fa fa-close"></i></div>
             </div>
-            <input type="text" class="form-control tag-input" name="tags" id="tags" placeholder="e.g. javascript, flutter" [(ngModel)]="inputTag">
+            <input type="text" class="form-control tag-input" name="tags" id="tags"
+                placeholder="e.g. javascript, flutter" [(ngModel)]="inputTag">
             <small class="info">(Provide upto 5 specific tags related to it)</small>
         </div>
         <div class="form-group mb-3">
             <label for="files" class="form-label">Add images describing your problem</label>
-            <input class="form-control" type="file" accept="image/*" id="files" (change)="onFilesChange($event)"
-                multiple>
+            <div class="file-container">
+                <input class="form-control" title="Browse Images" type="file" accept="image/*" id="files"
+                    (change)="onFilesChange($event)" multiple>
+                <span id="file-label">{{files.length === 0 ? 'No' : files.length}} file chosen</span>
+            </div>
             <small class="info">(Choose upto 5 images and each must be less then 1mb)</small>
+        </div>
+
+        <div class="table-responsive" *ngIf="files.length !== 0">
+            <table class="table align-middle">
+                <tbody>
+                    <tr class="file-item" *ngFor="let file of files; index as i">
+                        <td class="td-img"><img class="file-item-img img-fluid" [src]="imageUrls[i]" id="" alt=""></td>
+                        <td class="file-item-label">{{file.name}}</td>
+                        <td><span class="file-item-del" (click)="removeFile(i)">Remove</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <button type="submit" class="btn btn-primary btn-sm my-3" [disabled]="!fieldsValid()">Publish Question</button>
         <button type="reset" class="btn btn-danger btn-sm mx-2" (click)="clearFields()">Clear</button>
