@@ -5,7 +5,7 @@
     <app-tags [tags]="questionItem.tags"></app-tags>
 
     <div class="user-ques">
-        <small>asked {{ questionItem.askedDate | dateAgo}} by </small>
+        <small>asked {{ questionItem.askedDate | formattedDate }} by </small>
         <a class="user" [routerLink]="['/profile', questionItem.userId]">{{questionItem.username}}</a>
     </div>
 </div>

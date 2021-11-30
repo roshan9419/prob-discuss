@@ -22,6 +22,8 @@
         <app-qna-user-info [imageUrl]="user?.photoUrl!" [name]="question?.username" [userId]="question?.userId"
             [isQues]="true" [date]="question?.askedDate"></app-qna-user-info>
 
+        <app-comments [qnaId]="question?.questionId!" [isQuestionComment]="true"></app-comments>
+
         <hr style="margin-top: 100px;">
         <app-answers [question]="question!"></app-answers>
     </div>

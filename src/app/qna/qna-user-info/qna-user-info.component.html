@@ -1,5 +1,5 @@
 <div class="card-container" [ngClass]="{'light-background': !isQues}">
-    <small class="time">{{(isQues ? 'asked ' : 'answered ') + (date | dateAgo)}}</small>
+    <small class="time">{{(isQues ? 'asked ' : 'answered ') + (date | formattedDate)}}</small>
     <div class="user-det">
         <app-user-dp [borderRadius]="10"
             [photoUrl]="imageUrl">

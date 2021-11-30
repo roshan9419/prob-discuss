@@ -10,6 +10,7 @@ import { RectPhotoNameComponent } from './components/rect-photo-name/rect-photo-
 import { LoaderComponent } from './components/loader/loader.component';
 import { ConfirmComponent } from './dialogs/confirm/confirm.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { FormattedDatePipe } from './pipes/formatted-date.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
     RectPhotoNameComponent,
     LoaderComponent,
     ConfirmComponent,
-    SnackbarComponent
+    SnackbarComponent,
+    FormattedDatePipe
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
     LoaderComponent,
     ConfirmComponent,
     SnackbarComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    FormattedDatePipe
   ]
 })
 export class SharedModule { }
