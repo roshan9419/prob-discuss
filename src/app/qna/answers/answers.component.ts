@@ -188,7 +188,7 @@ export class AnswersComponent implements OnInit {
   }
 
   async addUpvote(ans: Answer) {
-    const resp = await this.dbService.addRemoveUpvote(ans.answerId, this.authService.userId!, true);
+    const resp = await this.dbService.addRemoveAnsUpvote(ans.answerId, this.authService.userId!, true);
     if (resp) {
       this.answers[this.answers.indexOf(ans)] = resp;
       this.snackbarService.showSnackbar("Successfuly upvoted this answer", SnackbarType.SUCCESS);
@@ -196,7 +196,7 @@ export class AnswersComponent implements OnInit {
   }
 
   async removeUpvote(ans: Answer) {
-    const resp = await this.dbService.addRemoveUpvote(ans.answerId, this.authService.userId!, false);
+    const resp = await this.dbService.addRemoveAnsUpvote(ans.answerId, this.authService.userId!, false);
     if (resp) {
       this.answers[this.answers.indexOf(ans)] = resp;
       this.snackbarService.showSnackbar("Your vote has been removed", SnackbarType.SUCCESS);

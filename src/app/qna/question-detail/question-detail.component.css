@@ -29,3 +29,44 @@ body {
     color: rgb(48, 160, 230);
     padding: 0px;
 }
+
+
+.ques-container {
+    /* padding: 10px; */
+    /* border: 1px solid black; */
+    display: flex;
+}
+
+.ques-left {
+    margin-top: 12px;
+    padding: 0;
+}
+
+.upvote-btn {
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid rgba(160, 157, 157, 0.767);
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.user-upvoted {
+    border-bottom: 15px solid rgba(48, 89, 223, 0.767);
+}
+
+.upvote-value {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 20px;
+    color: #5e5c5c;
+    padding: 5px;
+}
+
+.ques-body {
+    /* background-color: aquamarine; */
+    padding: 0;
+    height: fit-content;
+    flex-grow: 1;
+}

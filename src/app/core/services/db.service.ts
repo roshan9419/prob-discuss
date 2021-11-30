@@ -193,7 +193,47 @@ export class DBService {
     return usersMap;
   }
 
-  async addRemoveUpvote(answerId: string, userId: string, isAdd: boolean): Promise<Answer | null> {
+  async addRemoveQuesUpvote(questionId: string, userId: string, isAdd: boolean): Promise<Question | null> {
+    let updatedQues: Question | null = null;
+    try {
+      await this.db.firestore.runTransaction(async (t) => {
+        const quesDocSnap = await t.get(this.db.collection<Question>('questions').doc(questionId).ref);
+        if (!quesDocSnap.exists) {
+          throw new Error("Question not found");
+        }
+
+        const ques = quesDocSnap.data()!;
+        if (ques.upvotes === undefined) {
+          ques.upvotes = [];
+        }
+
+        if (ques.upvotes.includes(userId)) {
+          if (isAdd) throw new Error("Already added your vote");
+        } else {
+          if (!isAdd) throw new Error("You have not upvoted this question");
+        }
+
+        if (isAdd) {
+          ques.upvotes.push(userId);
+          ques.totalVotes++;
+        } else {
+          const idx = ques.upvotes.indexOf(userId);
+          if (idx != -1) {
+            ques.upvotes.splice(idx, 1);
+            ques.totalVotes--;
+          }
+        }
+
+        t.update(quesDocSnap.ref, this.toJson(ques));
+        updatedQues = ques;
+      });
+    } catch (e) {
+      throw e;
+    }
+    return updatedQues;
+  }
+
+  async addRemoveAnsUpvote(answerId: string, userId: string, isAdd: boolean): Promise<Answer | null> {
     let updatedAns: Answer | null = null;
     try {
       await this.db.firestore.runTransaction(async (t) => {

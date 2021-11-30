@@ -7,6 +7,7 @@ export class Question {
     tags?: string[]
     imgPaths?: string[]
     upvotes?: string[]
+    totalVotes: number = 0
     acceptedAnsId?: string
     status!: string
     askedDate!: Date

@@ -6,23 +6,35 @@
     <div class="container my-3">
         <p class="heading">{{ question!.title }}</p>
         <hr>
-        <quill-view-html [content]="question!.content" theme="snow"></quill-view-html>
 
-        <div class="img-container">
-            <div *ngFor="let imgPath of question!.imgPaths">
-                <!-- <p>{{getImageLink(imgPath)}}</p> -->
-                <img src="{{getImageLink(imgPath)}}" alt="" onclick="window.open(this.src, '_blank');">
+        <div class="ques-container">
+            <div class="ques-left">
+                <div class="upvote-btn"
+                    [ngClass]="{'user-upvoted': question!.upvotes !== undefined && currentUserId() != null && question!.upvotes.includes(currentUserId()!)}"
+                    (click)="onUpvoteBtnClick()"></div>
+                <div class="upvote-value">{{question!.upvotes?.length || 0}}</div>
+            </div>
+
+            <div class="ques-body">
+                <quill-view-html [content]="question!.content" theme="snow"></quill-view-html>
+
+                <div class="img-container">
+                    <div *ngFor="let imgPath of question!.imgPaths">
+                        <img src="{{getImageLink(imgPath)}}" alt="" onclick="window.open(this.src, '_blank');">
+                    </div>
+                </div>
+
+                <div *ngIf="question!.tags && question!.tags.length !== 0">
+                    <app-tags class="container" [tags]="question!.tags"></app-tags>
+                </div>
+
+                <app-qna-user-info [imageUrl]="user?.photoUrl!" [name]="question?.username" [userId]="question?.userId"
+                    [isQues]="true" [date]="question?.askedDate"></app-qna-user-info>
+
+                <app-comments [qnaId]="question?.questionId!" [isQuestionComment]="true"></app-comments>
             </div>
         </div>
 
-        <div *ngIf="question!.tags && question!.tags.length !== 0">
-            <app-tags class="container" [tags]="question!.tags"></app-tags>
-        </div>
-
-        <app-qna-user-info [imageUrl]="user?.photoUrl!" [name]="question?.username" [userId]="question?.userId"
-            [isQues]="true" [date]="question?.askedDate"></app-qna-user-info>
-
-        <app-comments [qnaId]="question?.questionId!" [isQuestionComment]="true"></app-comments>
 
         <hr style="margin-top: 100px;">
         <app-answers [question]="question!"></app-answers>
