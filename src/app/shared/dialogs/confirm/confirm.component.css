@@ -1,7 +1,8 @@
 .custom-alert {  
-    width:300px;  
+    width: 300px;
+    margin: auto;  
 }  
-  
+
 .modal-backdrop.in {  
     opacity: 0.9;  
 }  
