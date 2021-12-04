@@ -1,9 +1,23 @@
 <div class="search-container">
     <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-        aria-describedby="search-addon" id="search" value="{{searchQuery}}"/>
+        aria-describedby="search-addon" id="search" value="{{searchQuery}}" />
     <span class="search-btn">
         <i class="fa fa-search"></i>
     </span>
 </div>
 
 <h2>Search is currently unavailable</h2>
+
+
+<ais-instantsearch [config]="config">
+    <ais-search-box></ais-search-box>
+    <ais-hits>
+        <ng-template let-hits="hits">
+            <ol class="ais-Hits-list">
+                <li *ngFor="let hit of hits" class="ais-Hits-item">
+                    {{hit.name}}
+                </li>
+            </ol>
+        </ng-template>
+    </ais-hits>
+</ais-instantsearch>
