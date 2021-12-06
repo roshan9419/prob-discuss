@@ -15,6 +15,8 @@ import { StorageService } from './services/storage.service';
 import { FooterComponent } from './footer/footer.component';
 import { DialogService } from './services/dialog.service';
 import { SnackbarService } from './services/snackbar.service';
+import { ApiService } from './services/api.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,14 +29,16 @@ import { SnackbarService } from './services/snackbar.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    HttpClientModule
   ],
   providers: [
     DBService,
     AuthService,
+    ApiService,
     StorageService,
     DialogService,
-    SnackbarService
+    SnackbarService,
   ],
   exports: [
     NavbarComponent,

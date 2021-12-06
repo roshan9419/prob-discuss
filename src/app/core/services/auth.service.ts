@@ -34,6 +34,10 @@ export class AuthService {
     return this.authState != null;
   }
 
+  async getUserToken() {
+    return await this.authState?.getIdToken();
+  }
+
   async googleLoginIn() {
     const response = await this.afu.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     if (!response || !response.user) {

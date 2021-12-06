@@ -1,0 +1,21 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+
+  constructor(private httpClient: HttpClient, private authService: AuthService) { }
+
+  async onQuestionAdded(questionId: string) {
+    const token = await this.authService.getUserToken();
+    if (!token) throw Error("Please try again!");
+    this.httpClient.post('https://localhost:8000/questions', { questionId: questionId }, {
+      headers: {
+        authorization: token
+      }
+    });
+  }
+}

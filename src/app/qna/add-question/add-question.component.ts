@@ -3,6 +3,7 @@ import { ContentChange } from 'ngx-quill';
 import { SnackbarType } from 'src/app/core/models/enums/snackbarType';
 import { Status } from 'src/app/core/models/enums/status';
 import { Question } from 'src/app/core/models/question';
+import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DBService } from 'src/app/core/services/db.service';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
@@ -25,7 +26,7 @@ export class AddQuestionComponent implements OnInit {
 
   imageUrls: string[] | ArrayBuffer[] | null[] = []
 
-  constructor(private elementRef: ElementRef, private dbService: DBService, private authService: AuthService, private storageService: StorageService, private snackbarService: SnackbarService) {
+  constructor(private elementRef: ElementRef, private dbService: DBService, private authService: AuthService, private storageService: StorageService, private snackbarService: SnackbarService, private apiService: ApiService) {
     this.question = new Question();
   }
 
@@ -93,6 +94,7 @@ export class AddQuestionComponent implements OnInit {
       if (this.tags.length !== 0) this.question.tags = this.tags;
 
       const questionId: string = await this.dbService.addQuestion(this.question);
+      this.apiService.onQuestionAdded(questionId);
       if (this.files.length !== 0) {
         this.snackbarService.showSnackbar('Uploading files...', SnackbarType.INFO);
         try {
