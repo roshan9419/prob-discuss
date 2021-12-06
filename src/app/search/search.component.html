@@ -1,23 +1,33 @@
-<div class="search-container">
+<!-- <div class="search-container">
     <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
         aria-describedby="search-addon" id="search" value="{{searchQuery}}" />
     <span class="search-btn">
         <i class="fa fa-search"></i>
     </span>
-</div>
+</div> -->
 
-<h2>Search is currently unavailable</h2>
+<!-- <h2>Search is currently unavailable</h2> -->
 
 
 <ais-instantsearch [config]="config">
-    <ais-search-box></ais-search-box>
+    <div class="search-container">
+        <ais-search-box (change)="searchChanged($event)" placeholder="Search the questions..."></ais-search-box>
+    </div>
     <ais-hits>
         <ng-template let-hits="hits">
-            <ol class="ais-Hits-list">
-                <li *ngFor="let hit of hits" class="ais-Hits-item">
-                    {{hit.name}}
-                </li>
-            </ol>
+            <div *ngIf="showResults; else emptyResults">
+                <div *ngFor="let hit of hits">
+                    <app-srch-ques-item [hitObj]="hit"></app-srch-ques-item>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #emptyResults>
+            <div class="empty-results">
+                <img class="img-fluid"
+                    src="https://cdn.dribbble.com/users/760295/screenshots/4433975/media/03494b209a1511a61868ced337b97931.png?compress=1&resize=400x300"
+                    alt="" srcset="">
+            </div>
         </ng-template>
     </ais-hits>
 </ais-instantsearch>

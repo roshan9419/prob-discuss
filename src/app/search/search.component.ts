@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import algoliasearch from 'algoliasearch/lite';
 import { environment } from 'src/environments/environment';
+import { Question } from '../core/models/question';
 
 const searchClient = algoliasearch(
   environment.algolia.appId,
@@ -32,9 +33,26 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  searchChanged(query: Event) {
-    console.log(query);
-    // this.showResults = query !== 0;
+  searchChanged(query: any) {
+    if (typeof(query) === 'string') {
+      this.showResults = query.trim().length !== 0;
+    } else {
+      this.showResults = false;
+    }
+  }
+
+  getQuestion(obj: any) {
+    return obj as Question;
+  }
+
+  getQuestionTitle(obj: any) {
+    return obj._highlightResult.title.value;
+  }
+
+  getQuestionDesc(obj: Object) {
+    const htmlEl = document.createElement('body');
+    htmlEl.innerHTML = this.getQuestion(obj).content;
+    return htmlEl.innerText;
   }
 
 }

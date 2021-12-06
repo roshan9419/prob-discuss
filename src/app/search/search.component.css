@@ -1,11 +1,8 @@
-body {
-    background-color: aqua;
-}
-
 .search-container {
     display: flex;
     justify-content: center;
-    margin: 100px 20px 20px 20px;
+    margin: 80px 20px 50px 20px;
+    /* background-color: aquamarine; */
 }
 
 .search-btn {
@@ -18,7 +15,14 @@ h2 {
     color: rgb(121, 119, 119);
 }
 
-#search {
-    max-width: 800px;
-    padding: 10px;
+ais-search-box {
+    max-width: 900px;
+    width: 100%;
+    /* background-color: blueviolet; */
+}
+
+.empty-results {
+    display: grid;
+    justify-content: center;
+    align-items: center;
 }
