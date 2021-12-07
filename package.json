@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "algolia": "^0.0.0",
     "algoliasearch": "^4.11.0",
     "angular-instantsearch": "^4.0.1",
     "bootstrap": "^5.1.3",

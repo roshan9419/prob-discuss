@@ -6,6 +6,7 @@ import { SearchComponent } from './search.component';
 import { NgAisModule } from 'angular-instantsearch';
 import { SrchQuesItemComponent } from './srch-ques-item/srch-ques-item.component';
 import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     SearchRoutingModule,
     NgAisModule,
-    SharedModule
+    SharedModule,
+    CoreModule
   ],
   exports: [
   ]

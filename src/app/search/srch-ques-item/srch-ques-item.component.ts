@@ -17,9 +17,6 @@ export class SrchQuesItemComponent implements OnInit {
 
   getTitle() {
     return this.hitObj._highlightResult.title.value;
-    const htmlEl = document.createElement('body');
-    // htmlEl.innerHTML = this.question.title;
-    return htmlEl.innerHTML;
   }
 
   getContent() {

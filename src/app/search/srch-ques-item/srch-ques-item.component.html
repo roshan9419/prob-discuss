@@ -1,4 +1,4 @@
 <div class="container">
-    <a class="qtitle" [routerLink]="'/question/'" [innerHTML]="getTitle()"></a><br>
+    <a class="qtitle" [routerLink]="['/question', hitObj.questionId ]" [innerHTML]="getTitle()"></a><br>
     <p class="content">{{ getContent() }}</p>
 </div>

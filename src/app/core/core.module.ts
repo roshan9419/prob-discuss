@@ -6,6 +6,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 // Services
@@ -16,7 +17,6 @@ import { FooterComponent } from './footer/footer.component';
 import { DialogService } from './services/dialog.service';
 import { SnackbarService } from './services/snackbar.service';
 import { ApiService } from './services/api.service';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
