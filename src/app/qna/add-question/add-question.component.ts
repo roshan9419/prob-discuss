@@ -104,9 +104,9 @@ export class AddQuestionComponent implements OnInit {
           throw e;
         }
       }
-
       this.clearFields();
       this.snackbarService.showSnackbar('Question published successfuly', SnackbarType.SUCCESS);
+      await this.apiService.onQuestionAdded(questionId);
     } catch (e) {
       this.snackbarService.showSnackbar('Something went wrong, please try again.', SnackbarType.WARNING);
     }

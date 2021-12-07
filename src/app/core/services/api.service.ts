@@ -7,15 +7,20 @@ import { AuthService } from './auth.service';
 })
 export class ApiService {
 
-  constructor(private httpClient: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
+
+  baseUrl: string = 'https://probdiscuss-api.herokuapp.com/';
 
   async onQuestionAdded(questionId: string) {
     const token = await this.authService.getUserToken();
+    // console.log(token);
     if (!token) throw Error("Please try again!");
-    this.httpClient.post('https://localhost:8000/questions', { questionId: questionId }, {
+    this.http.post<any>(this.baseUrl + '/questions', { questionId: questionId }, {
       headers: {
         authorization: token
       }
+    }).subscribe(resp => {
+      // console.log(resp);
     });
   }
 }
