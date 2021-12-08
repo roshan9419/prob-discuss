@@ -12,7 +12,7 @@ export class AuthService {
   private authState: firebase.User | null = null;
 
   constructor(private afu: AngularFireAuth, private dbService: DBService) {
-    console.log("AuthService Initialized");
+    // console.log("AuthService Initialized");
     this.afu.authState.subscribe((auth => {
       this.authState = auth;
     }))

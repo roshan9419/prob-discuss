@@ -94,7 +94,6 @@ export class AddQuestionComponent implements OnInit {
       if (this.tags.length !== 0) this.question.tags = this.tags;
 
       const questionId: string = await this.dbService.addQuestion(this.question);
-      this.apiService.onQuestionAdded(questionId);
       if (this.files.length !== 0) {
         this.snackbarService.showSnackbar('Uploading files...', SnackbarType.INFO);
         try {

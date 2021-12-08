@@ -10,7 +10,7 @@ export class SnackbarService {
   private subject = new Subject<any>();
   
   constructor() { 
-    console.log("Snackbar Service initialized");
+    // console.log("Snackbar Service initialized");
   }
 
   showSnackbar(message: string, type: SnackbarType) {

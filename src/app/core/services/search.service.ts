@@ -18,7 +18,7 @@ export class SearchService {
 
   async getSearchResults(query: string) {
     const results = await this.client.initIndex(environment.algolia.indexName).search(query);
-    console.log(results.hits);
+    // console.log(results.hits);
     return results.hits;
   }
 }

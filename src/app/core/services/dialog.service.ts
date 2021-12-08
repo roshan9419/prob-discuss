@@ -8,7 +8,7 @@ export class DialogService {
   private subject = new Subject<any>();
 
   constructor() { 
-    console.log("Dialog Service initialized");
+    // console.log("Dialog Service initialized");
   }
 
   confirm(message: string, siFn: () => void, noFn: () => void) {

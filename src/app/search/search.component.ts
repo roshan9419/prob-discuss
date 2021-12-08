@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit {
   }
 
   async loadResult() {
-    console.log(this.searchQuery);
+    // console.log(this.searchQuery);
     this.hits = await this.searchService.getSearchResults(this.searchQuery);
   }
 
